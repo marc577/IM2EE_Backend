@@ -7,5 +7,4 @@ import javax.ws.rs.core.Application;
 public class JEEApplication extends Application {
 
 
-
 }
