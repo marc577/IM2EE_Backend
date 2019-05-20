@@ -1,5 +1,7 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +14,13 @@ public class DeviceElement {
     private long id;
 
     @ManyToOne
+    @JsonIgnore
     private DeviceBasic deviceBasic;
 
     @Column
     private int active;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceElement")
+    @OneToMany(mappedBy = "deviceElement", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<DeviceStateCalendar> deviceStateCalendars = new ArrayList<DeviceStateCalendar>();
 
     public DeviceElement() {

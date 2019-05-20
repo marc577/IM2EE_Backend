@@ -1,5 +1,7 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class DeviceBasic {
     private long id;
 
     @ManyToOne
+    @JsonIgnore
     private Pool pool;
 
     @Column(length = 64)
@@ -19,7 +22,7 @@ public class DeviceBasic {
 
     //#TODO imageField
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceBasic")
+    @OneToMany(mappedBy = "deviceBasic", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<DeviceElement> deviceElements = new ArrayList<DeviceElement>();
 
     public DeviceBasic() {

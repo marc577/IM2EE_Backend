@@ -1,9 +1,11 @@
 package entities;
 
 import javax.persistence.*;
-import java.math.BigInteger;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 
 @Entity(name = "User")
@@ -25,7 +27,7 @@ public class User {
     @Column(length = 256)
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Pool> pools = new ArrayList<Pool>();
 
     public User() {
@@ -39,6 +41,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.pools = Lists.newArrayList();
     }
 
 
@@ -88,5 +91,10 @@ public class User {
 
     public void setPools(List<Pool> pools) {
         this.pools = pools;
+    }
+
+    public void addBlogPools(Pool pool)
+    {
+        this.pools.add(pool);
     }
 }
