@@ -1,16 +1,9 @@
 package services;
 
-import entities.Pool;
 import entities.User;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import javax.json.JsonObject;
 import javax.inject.Inject;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -22,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.io.BufferedReader;
+import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -41,28 +34,24 @@ public class UserService {
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public User register() {
+    public Response register(JsonObject jsonObject) {
 
-        final JsonObject jsonObject = RequestHelper.httpRequestToJsonObject(httpServletRequest);
-
-        final String firstName = jsonObject.get("firstName").getAsString();
-        final String lastName = jsonObject.get("lastName").getAsString();
-        final String email = jsonObject.get("email").getAsString();
-        final String password = jsonObject.get("password").getAsString();
+        final String firstName = jsonObject.getString("firstName");
+        final String lastName = jsonObject.getString("lastName");
+        final String email = jsonObject.getString("email");
+        final String password = jsonObject.getString("password");
 
 
         if (!emailExists(email)) {
             //#TODO Password verschlüsseln
             User user = new User(firstName,lastName, email, password);
             em.persist(user);
-            return user;
+            return Response.status(Response.Status.OK).entity(user).build();
         }
-        //#TODO Korrekte Info rausgeben
-        System.out.println("User existiert bereits");
-        return null;
+        return Response.status(Response.Status.BAD_REQUEST).entity("User already exists").build();
     }
 
-    public boolean emailExists(final String email) {
+    private boolean emailExists(final String email) {
         List resultList = em.createNativeQuery("SELECT COUNT(*) " +
                                                 "FROM user " +
                                                 "WHERE email= ?")
@@ -77,12 +66,10 @@ public class UserService {
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public User login() {
+    public Response login(JsonObject jsonObject) {
 
-        final JsonObject jsonObject = RequestHelper.httpRequestToJsonObject(httpServletRequest);
-
-        final String email = jsonObject.get("email").getAsString();
-        final String password = jsonObject.get("password").getAsString();
+        final String email = jsonObject.getString("email");
+        final String password = jsonObject.getString("password");
 
         List resultList = em.createNativeQuery("SELECT id " +
                 "FROM user " +
@@ -93,19 +80,12 @@ public class UserService {
             BigInteger uId = (BigInteger) resultList.get(0);
             User u = em.find(User.class, uId.longValue());
             if (u.getPassword().equals(password)) {
-                System.out.println("Login erfolgreich");
-                System.out.println(u);
-                return u;
+                return Response.status(Response.Status.OK).entity(u).build();
             } else {
-                //#TODO Password inkorrekts
-                System.out.println("Passwort ist falsch");
-                return null;
+                return Response.status(Response.Status.BAD_REQUEST).entity("Wrong password").build();
             }
-
         } else {
-            //#TODO Info, user existiert nicht
-            System.out.println("User nicht gefunden");
-            return null;
+            return Response.status(Response.Status.BAD_REQUEST).entity("User not found").build();
         }
     }
 

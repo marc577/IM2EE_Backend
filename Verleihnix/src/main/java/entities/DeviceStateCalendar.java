@@ -1,5 +1,7 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class DeviceStateCalendar {
     private Date date;
 
     @ManyToOne
+    @JsonIgnore
     private DeviceElement deviceElement;
 
     public DeviceStateCalendar() {

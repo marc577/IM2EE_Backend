@@ -1,8 +1,11 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity(name = "Pool")
 public class Pool {
@@ -15,10 +18,13 @@ public class Pool {
     private String description;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pool")
+
+    @OneToMany(mappedBy = "pool", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<DeviceBasic> basicDevices = new ArrayList<DeviceBasic>();
+
 
     public Pool() {
         super();
