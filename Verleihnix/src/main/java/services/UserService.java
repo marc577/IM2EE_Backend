@@ -1,6 +1,8 @@
 package services;
 
 import entities.User;
+import proxies.RegisterProxy;
+import proxies.UserOutProxy;
 import security.JwtTokenService;
 
 import javax.inject.Inject;
@@ -8,6 +10,7 @@ import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,17 +33,10 @@ public class UserService {
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(JsonObject jsonObject) {
-
-        final String firstName = jsonObject.getString("firstName");
-        final String lastName = jsonObject.getString("lastName");
-        final String email = jsonObject.getString("email");
-        final String password = jsonObject.getString("password");
-
-
-        if (!emailExists(email)) {
+    public Response register(@Valid RegisterProxy registerObject) {
+        if (!emailExists(registerObject.getEmail())) {
             //#TODO Password verschlüsseln
-            User user = new User(firstName,lastName, email, password);
+            User user = new User(registerObject.getFirstName(),registerObject.getLastName(), registerObject.getEmail(), registerObject.getPassword());
             em.persist(user);
             return Response.status(Response.Status.OK).entity(user).build();
         }
@@ -76,8 +72,8 @@ public class UserService {
             BigInteger uId = (BigInteger) resultList.get(0);
             User u = em.find(User.class, uId.longValue());
             if (u.getPassword().equals(password)) {
-                u.setToken(jwtTokenService.generateJwtToken(u));
-                return Response.status(Response.Status.OK).entity(u).build();
+                UserOutProxy up = new UserOutProxy(u.getId(),jwtTokenService.generateJwtToken(u), u.getLastName(), u.getFirstName(), u.getEmail() );
+                return Response.status(Response.Status.OK).entity(up).build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST).entity("Wrong password").build();
             }

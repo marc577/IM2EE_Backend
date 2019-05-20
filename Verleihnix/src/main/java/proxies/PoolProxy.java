@@ -14,13 +14,14 @@ public class PoolProxy {
 	@NotNull
 	private String description;
 
-	PoolProxy(){
+	public PoolProxy(){
 		super();
 		this.id = -1;
 		this.description = null;
 	}
 
-	PoolProxy(long id, String description){
+	public PoolProxy(long id, String description){
+		super();
 		this.id = id;
 		this.description = description;
 	}
