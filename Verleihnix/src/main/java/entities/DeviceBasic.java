@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name="deviceBasic")
+@Entity(name="DeviceBasic")
 public class DeviceBasic {
 
     @Id
