@@ -5,10 +5,9 @@ import entities.User;
 import proxies.PoolProxy;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -25,6 +24,7 @@ public class PoolService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+	@Transactional
     public Response editPool(@Valid PoolProxy pp) {
         //TODO: Benutzer from JSON TOKEN
         long uid = 1;
@@ -53,6 +53,7 @@ public class PoolService {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
+	@Transactional
     public Response getPool(@PathParam("id") long id) {
         //TODO: Benutzer from JSON TOKEN
         long uid = 1;
@@ -72,6 +73,7 @@ public class PoolService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+	@Transactional
     public Response getPools() {
         //TODO: Benutzer from JSON TOKEN
         long uid = 1;
@@ -84,8 +86,9 @@ public class PoolService {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+	@Transactional
     public Response deletePool(@PathParam("id") long id) {
         //TODO: Benutzer from JSON TOKEN
         long uid = 1;
@@ -101,6 +104,8 @@ public class PoolService {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         em.remove(p);
+		//em.remove(p);
+        //p = null;
         return Response.status(Response.Status.OK).build();
     }
 
