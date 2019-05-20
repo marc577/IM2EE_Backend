@@ -1,33 +1,29 @@
 package services;
 
 import entities.User;
+import security.JwtTokenService;
 
-import javax.json.JsonObject;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.util.List;
 
 
+
 @Path("/user")
 public class UserService {
 
-    @Inject
-    private HttpServletRequest httpServletRequest;
-
     @PersistenceContext
     EntityManager em;
+
+    @Inject
+    JwtTokenService jwtTokenService;
 
     @Path("/register")
     @POST
@@ -80,14 +76,18 @@ public class UserService {
             BigInteger uId = (BigInteger) resultList.get(0);
             User u = em.find(User.class, uId.longValue());
             if (u.getPassword().equals(password)) {
+                u.setToken(jwtTokenService.generateJwtToken(u));
                 return Response.status(Response.Status.OK).entity(u).build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST).entity("Wrong password").build();
             }
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("User not found").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
         }
     }
+
+
+
 
 
 

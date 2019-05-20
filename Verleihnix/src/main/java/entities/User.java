@@ -15,6 +15,9 @@ public class User {
     @GeneratedValue
     private long id;
 
+    @Transient
+    private String token;
+
     @Column(length = 64)
     private String lastName;
 
@@ -44,6 +47,13 @@ public class User {
         this.pools = Lists.newArrayList();
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public long getId() {
         return id;

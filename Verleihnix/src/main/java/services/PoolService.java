@@ -3,13 +3,18 @@ package services;
 import entities.Pool;
 import entities.User;
 import proxies.PoolProxy;
+import security.JwtTokenService;
+import security.RequiresWebToken;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -21,14 +26,20 @@ public class PoolService {
     @PersistenceContext
     EntityManager em;
 
+    @Inject
+    private HttpServletRequest httpServletRequest;
+
+    @Inject
+    private JwtTokenService jwtTokenService;
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	@Transactional
+    @RequiresWebToken
     public Response editPool(@Valid PoolProxy pp) {
-        //TODO: Benutzer from JSON TOKEN
-        long uid = 1;
-        User u = em.find(User.class,uid);
+        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        User u = jwtTokenService.getUserByToken(token);
         if(u == null){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -36,6 +47,7 @@ public class PoolService {
         if(pp.getId() == -1){
             p = new Pool(pp.getDescription(), u);
             em.persist(p);
+            pp.setId(p.getId());
         }else{
             p =  em.find(Pool.class, pp.getId());
             if(p == null){
@@ -54,10 +66,10 @@ public class PoolService {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
 	@Transactional
+    @RequiresWebToken
     public Response getPool(@PathParam("id") long id) {
-        //TODO: Benutzer from JSON TOKEN
-        long uid = 1;
-        User u = em.find(User.class,uid);
+        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        User u = jwtTokenService.getUserByToken(token);
         if(u == null){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -74,10 +86,10 @@ public class PoolService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
 	@Transactional
+    @RequiresWebToken
     public Response getPools() {
-        //TODO: Benutzer from JSON TOKEN
-        long uid = 1;
-        User u = em.find(User.class,uid);
+        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        User u = jwtTokenService.getUserByToken(token);
         if(u == null){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -89,10 +101,10 @@ public class PoolService {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
 	@Transactional
+    @RequiresWebToken
     public Response deletePool(@PathParam("id") long id) {
-        //TODO: Benutzer from JSON TOKEN
-        long uid = 1;
-        User u = em.find(User.class,uid);
+        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        User u = jwtTokenService.getUserByToken(token);
         if(u == null){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

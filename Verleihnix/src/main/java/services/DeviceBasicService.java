@@ -36,13 +36,16 @@ public class DeviceBasicService {
 
         final long id = jsonObject.get("poolId").getAsLong();
         final String deviceBasicDescription = jsonObject.get("description").getAsString();
+        final long countOfElements = jsonObject.get("countOfElements").getAsLong();
 
         Pool pool = em.find(Pool.class, id);
         DeviceBasic db = new DeviceBasic(deviceBasicDescription, pool);
         em.persist(db);
-        DeviceElement dv = new DeviceElement(db);
-        em.persist(dv);
-        db.getDeviceElements().add(dv);
+        for (long l = 0; l < countOfElements; l++) {
+            DeviceElement dv = new DeviceElement(db);
+            em.persist(dv);
+            db.getDeviceElements().add(dv);
+        }
         return db;
     }
 }
