@@ -8,10 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Verleihnix</title>
 </head>
 <body>
-    <h1>Hello World</h1>
-
+    <p>REST available under http://localhost:8080/verleihnix/api/...</p>
 </body>
 </html>
