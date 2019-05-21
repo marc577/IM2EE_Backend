@@ -4,7 +4,7 @@ import entities.User;
 import org.mindrot.jbcrypt.BCrypt;
 import proxies.ChangePasswordProxy;
 import proxies.RegisterProxy;
-import proxies.UserOutProxy;
+import proxies.UserProxy;
 import security.RequiresWebToken;
 
 import javax.json.JsonObject;
@@ -54,7 +54,7 @@ public class UserService extends SuperService{
             BigInteger uId = (BigInteger) resultList.get(0);
             User u = em.find(User.class, uId.longValue());
             if (BCrypt.checkpw(password, u.getPassword())) {
-                UserOutProxy up = new UserOutProxy(u.getId(),jwtTokenService.generateJwtToken(u), u.getLastName(), u.getFirstName(), u.getEmail() );
+                UserProxy up = new UserProxy(u.getId(),jwtTokenService.generateJwtToken(u), u.getLastName(), u.getFirstName(), u.getEmail() );
                 return Response.status(Response.Status.OK).entity(up).build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST).entity("Wrong password").build();
@@ -69,7 +69,7 @@ public class UserService extends SuperService{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @RequiresWebToken
-    public Response edit(@Valid UserOutProxy userOutProxy) {
+    public Response edit(@Valid UserProxy userOutProxy) {
 
         try {
             User user = this.getUserByHttpToken();
@@ -82,6 +82,26 @@ public class UserService extends SuperService{
             user.setEmail(userOutProxy.getEmail());
             em.persist(user);
             return Response.status(Response.Status.OK).entity(user).build();
+
+        } catch (NotAuthorizedException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @GET
+    @Transactional
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @RequiresWebToken
+    public Response get() {
+        try {
+            User user = this.getUserByHttpToken();
+            UserProxy up = new UserProxy();
+            up.setToken(user.getToken());
+            up.setFirstName(user.getFirstName());
+            up.setLastName(user.getLastName());
+            up.setEmail(user.getEmail());
+            return Response.status(Response.Status.OK).entity(up).build();
 
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("Pool")
-public class UserOutProxy {
+public class UserProxy {
 
 	@JsonProperty
 	private long id;
@@ -21,10 +21,10 @@ public class UserOutProxy {
 	@JsonProperty
 	private String email;
 
-	public UserOutProxy(){
+	public UserProxy(){
 		super();
 	}
-	public UserOutProxy(long id, String token, String lastName, String firstName, String email){
+	public UserProxy(long id, String token, String lastName, String firstName, String email){
 		super();
 		this.id = id;
 		this.lastName = lastName;

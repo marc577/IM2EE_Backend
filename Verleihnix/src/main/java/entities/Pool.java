@@ -56,11 +56,11 @@ public class Pool {
         this.user = user;
     }
 
-    public List<Insertion> getBasicDevices() {
+    public List<Insertion> getInsertions() {
         return insertions;
     }
 
-    public void setBasicDevices(List<Insertion> basicDevices) {
-        this.insertions = basicDevices;
+    public void setInsertions(List<Insertion> insertions) {
+        this.insertions = insertions;
     }
 }
