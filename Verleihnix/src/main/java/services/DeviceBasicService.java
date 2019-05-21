@@ -1,6 +1,7 @@
 package services;
 
 import entities.DeviceBasic;
+import entities.DeviceElement;
 import entities.Pool;
 import entities.User;
 import proxies.DeviceBasicProxy;
@@ -44,6 +45,13 @@ public class DeviceBasicService extends SuperService {
             em.persist(db);
             dbp.setId(db.getId());
             dbp.setIdPool(db.getPool().getId());
+            if (dbp.getAmount() > 0) {
+                for (int i = 0; i < dbp.getAmount(); i++) {
+                    DeviceElement de = new DeviceElement(db);
+                    em.persist(de);
+                    db.getDeviceElements().add(de);
+                }
+            }
         }else{ // UPDATE
             db =  em.find(DeviceBasic.class, dbp.getId());
             if(db == null){
@@ -105,7 +113,7 @@ public class DeviceBasicService extends SuperService {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @RequiresWebToken
-    public Response deletePool(@PathParam("id") long id) {
+    public Response deleteDeviceBasic(@PathParam("id") long id) {
         try {
             User u = getUserByHttpToken();
             DeviceBasic db = findDeviceBasic(id, u);

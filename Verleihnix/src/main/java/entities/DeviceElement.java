@@ -18,7 +18,7 @@ public class DeviceElement {
     private DeviceBasic deviceBasic;
 
     @Column
-    private int active;
+    private boolean active;
 
     @OneToMany(mappedBy = "deviceElement", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<DeviceStateCalendar> deviceStateCalendars = new ArrayList<DeviceStateCalendar>();
@@ -30,7 +30,7 @@ public class DeviceElement {
     public DeviceElement(DeviceBasic deviceBasic) {
         super();
         this.deviceBasic=deviceBasic;
-        this.active=1;
+        this.active=true;
     }
 
     public long getId() {
@@ -49,11 +49,11 @@ public class DeviceElement {
         this.deviceBasic = deviceBasic;
     }
 
-    public int isActive() {
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

@@ -20,7 +20,6 @@ public class DeviceBasicProxy {
     private long idPool;
 
     @JsonProperty
-    @NotNull
     private int amount;
 
     public DeviceBasicProxy() {
