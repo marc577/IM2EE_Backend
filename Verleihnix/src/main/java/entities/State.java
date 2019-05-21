@@ -1,7 +1,8 @@
 package entities;
 
 public enum State {
-    reserve,
-    notAvailable
+    requested,
+    accepted,
+    declined
 
 }

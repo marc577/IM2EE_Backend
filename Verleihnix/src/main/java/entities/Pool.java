@@ -22,7 +22,7 @@ public class Pool {
 
 
     @OneToMany(mappedBy = "pool", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<DeviceBasic> basicDevices = new ArrayList<DeviceBasic>();
+    private List<Insertion> insertions = new ArrayList<>();
 
 
     public Pool() {
@@ -56,11 +56,11 @@ public class Pool {
         this.user = user;
     }
 
-    public List<DeviceBasic> getBasicDevices() {
-        return basicDevices;
+    public List<Insertion> getBasicDevices() {
+        return insertions;
     }
 
-    public void setBasicDevices(List<DeviceBasic> basicDevices) {
-        this.basicDevices = basicDevices;
+    public void setBasicDevices(List<Insertion> basicDevices) {
+        this.insertions = basicDevices;
     }
 }

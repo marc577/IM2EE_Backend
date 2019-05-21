@@ -1,7 +1,6 @@
 package services;
 
 import entities.*;
-import proxies.DeviceBasicProxy;
 import proxies.DeviceElementProxy;
 import security.RequiresWebToken;
 
@@ -22,6 +21,7 @@ public class DeviceElementService extends SuperService {
     @Transactional
     @RequiresWebToken
     public Response editDeviceElement(@Valid DeviceElementProxy deviceElementProxy) {
+        /*
         User u;
         try {
             u = getUserByHttpToken();
@@ -54,6 +54,9 @@ public class DeviceElementService extends SuperService {
             em.persist(deviceElement);
         }
         return Response.status(Response.Status.OK).entity(deviceElement).build();
+
+         */
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
     }
 
 
@@ -64,6 +67,7 @@ public class DeviceElementService extends SuperService {
     @RequiresWebToken
     public Response getDeviceElement(@PathParam("id") long id) {
 
+        /*
         try {
             User u = getUserByHttpToken();
             DeviceElement deviceElement = this.findDeviceElement(id, u);
@@ -73,6 +77,9 @@ public class DeviceElementService extends SuperService {
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+
+         */
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
     }
 
     @GET
@@ -81,6 +88,7 @@ public class DeviceElementService extends SuperService {
     @Transactional
     @RequiresWebToken
     public Response getDeviceElements(@PathParam("deviceBasicId") long deviceBasicId) {
+        /*
         User u;
         try {
             u = getUserByHttpToken();
@@ -89,6 +97,7 @@ public class DeviceElementService extends SuperService {
         }
 
         List<DeviceElement> deviceElements = new ArrayList<>();
+
         for (Pool pool : u.getPools()) {
             for (DeviceBasic deviceBasic : pool.getBasicDevices()) {
                 if (deviceBasic.getId()==deviceBasicId) {
@@ -100,7 +109,9 @@ public class DeviceElementService extends SuperService {
                 break;
             }
         }
-        return Response.status(Response.Status.OK).entity(deviceElements).build();
+
+         */
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
     }
 
     @GET
@@ -116,18 +127,21 @@ public class DeviceElementService extends SuperService {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        List<DeviceStateCalendar> openRequestsDeviceElements = new ArrayList<>();
+        List<InsertionStateCalendar> openRequestsDeviceElements = new ArrayList<>();
+        /*
         for (Pool pool : u.getPools()) {
             for (DeviceBasic deviceBasic : pool.getBasicDevices()) {
                 for(DeviceElement deviceElement : deviceBasic.getDeviceElements()) {
-                    for (DeviceStateCalendar deviceStateCalendar : deviceElement.getDeviceStateCalendars()) {
-                        if (deviceStateCalendar.getState()==State.reserve) {
-                            openRequestsDeviceElements.add(deviceStateCalendar);
+                    for (InsertionStateCalendar insertionStateCalendar : deviceElement.getInsertionStateCalendars()) {
+                        if (insertionStateCalendar.getState()==State.requested) {
+                            openRequestsDeviceElements.add(insertionStateCalendar);
                         }
                     }
                 }
             }
         }
+
+         */
         return Response.status(Response.Status.OK).entity(openRequestsDeviceElements).build();
     }
 
@@ -137,6 +151,7 @@ public class DeviceElementService extends SuperService {
     @Transactional
     @RequiresWebToken
     public Response deleteDeviceElement(@PathParam("id") long id) {
+        /*
         try {
             User u = getUserByHttpToken();
             DeviceElement db = findDeviceElement(id, u);
@@ -147,9 +162,13 @@ public class DeviceElementService extends SuperService {
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+
+         */
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
     }
 
-    private DeviceElement findDeviceElement(long id, User u) throws NotFoundException, NotAuthorizedException{
+    private Response findDeviceElement(long id, User u) throws NotFoundException, NotAuthorizedException{
+        /*
         DeviceElement deviceElement = em.find(DeviceElement.class, id);
         if(deviceElement == null){
             throw new NotFoundException();
@@ -158,5 +177,9 @@ public class DeviceElementService extends SuperService {
             throw new NotAuthorizedException(Response.Status.UNAUTHORIZED);
         }
         return deviceElement;
+
+         */
+
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
     }
 }

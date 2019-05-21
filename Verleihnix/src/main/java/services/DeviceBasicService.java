@@ -1,7 +1,5 @@
 package services;
 
-import entities.DeviceBasic;
-import entities.DeviceElement;
 import entities.Pool;
 import entities.User;
 import proxies.DeviceBasicProxy;
@@ -19,12 +17,14 @@ import java.util.List;
 public class DeviceBasicService extends SuperService {
 
 
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @RequiresWebToken
     public Response editDeviceBasic(@Valid DeviceBasicProxy dbp) {
+        /*
         User u;
         try {
             u = getUserByHttpToken();
@@ -65,6 +65,9 @@ public class DeviceBasicService extends SuperService {
             em.persist(db);
         }
         return Response.status(Response.Status.OK).entity(dbp).build();
+
+         */
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
     }
 
     @GET
@@ -74,6 +77,7 @@ public class DeviceBasicService extends SuperService {
     @RequiresWebToken
     public Response getDeviceBasic(@PathParam("id") long id) {
 
+        /*
         try {
             User u = getUserByHttpToken();
             DeviceBasic db = findDeviceBasic(id, u);
@@ -83,6 +87,10 @@ public class DeviceBasicService extends SuperService {
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+
+         */
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
+
     }
 
     @GET
@@ -91,6 +99,7 @@ public class DeviceBasicService extends SuperService {
     @Transactional
     @RequiresWebToken
     public Response getDeviceBasics(@PathParam("idPool") long idPool) {
+        /*
         User u;
         try {
             u = getUserByHttpToken();
@@ -101,10 +110,13 @@ public class DeviceBasicService extends SuperService {
         List<DeviceBasic> deviceBasics = new ArrayList<>();
         for (Pool pool : u.getPools()) {
             if (pool.getId() == idPool) {
-                deviceBasics = pool.getBasicDevices();
+                //deviceBasics = pool.getBasicDevices();
             }
         }
         return Response.status(Response.Status.OK).entity(deviceBasics).build();
+
+         */
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
     }
 
 
@@ -114,6 +126,8 @@ public class DeviceBasicService extends SuperService {
     @Transactional
     @RequiresWebToken
     public Response deleteDeviceBasic(@PathParam("id") long id) {
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
+        /*
         try {
             User u = getUserByHttpToken();
             DeviceBasic db = findDeviceBasic(id, u);
@@ -124,9 +138,13 @@ public class DeviceBasicService extends SuperService {
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+
+         */
     }
 
-    private DeviceBasic findDeviceBasic(long id, User u) throws NotFoundException, NotAuthorizedException{
+    private Response findDeviceBasic(long id, User u) throws NotFoundException, NotAuthorizedException{
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
+        /*
         DeviceBasic db = em.find(DeviceBasic.class, id);
         if(db == null){
             throw new NotFoundException();
@@ -135,5 +153,7 @@ public class DeviceBasicService extends SuperService {
             throw new NotAuthorizedException(Response.Status.UNAUTHORIZED);
         }
         return db;
+
+         */
     }
 }
