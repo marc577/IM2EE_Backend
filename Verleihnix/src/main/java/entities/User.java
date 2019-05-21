@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 @Entity(name = "User")
@@ -27,7 +28,7 @@ public class User {
     @Column(length = 64)
     private String email;
 
-    @Column(length = 256)
+    @XmlTransient
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -43,7 +44,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.pools = Lists.newArrayList();
     }
 
@@ -92,7 +93,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());;
     }
 
     public List<Pool> getPools() {

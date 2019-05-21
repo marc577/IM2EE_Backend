@@ -1,6 +1,7 @@
 package services;
 
 import entities.User;
+import org.mindrot.jbcrypt.BCrypt;
 import proxies.RegisterProxy;
 import proxies.UserOutProxy;
 import security.JwtTokenService;
@@ -35,7 +36,6 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(@Valid RegisterProxy registerObject) {
         if (!emailExists(registerObject.getEmail())) {
-            //#TODO Password verschlüsseln
             User user = new User(registerObject.getFirstName(),registerObject.getLastName(), registerObject.getEmail(), registerObject.getPassword());
             em.persist(user);
             return Response.status(Response.Status.OK).entity(user).build();
@@ -71,7 +71,7 @@ public class UserService {
         if (resultList.size()>0) {
             BigInteger uId = (BigInteger) resultList.get(0);
             User u = em.find(User.class, uId.longValue());
-            if (u.getPassword().equals(password)) {
+            if (BCrypt.checkpw(password, u.getPassword())) {
                 UserOutProxy up = new UserOutProxy(u.getId(),jwtTokenService.generateJwtToken(u), u.getLastName(), u.getFirstName(), u.getEmail() );
                 return Response.status(Response.Status.OK).entity(up).build();
             } else {

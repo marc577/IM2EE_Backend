@@ -8,6 +8,13 @@ import java.util.Date;
 @Entity(name="DeviceStateCalendar")
 public class DeviceStateCalendar {
 
+    /*
+    #TODO:
+    Anfragensteller
+    Anfragetext
+    Annahmetext mit hinzufügen
+     */
+
     @Id
     @GeneratedValue
     private long id;

@@ -1,7 +1,7 @@
 package entities;
 
 public enum State {
-    reserviert,
-    besetzt
+    reserve,
+    notAvailable
 
 }
