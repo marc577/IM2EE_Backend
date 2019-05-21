@@ -10,10 +10,6 @@ public class ChangePasswordProxy {
 
     @JsonProperty
     @NotNull
-    private String oldPassword;
-
-    @JsonProperty
-    @NotNull
     private String newPassword;
 
     @JsonProperty
@@ -22,23 +18,13 @@ public class ChangePasswordProxy {
 
     public ChangePasswordProxy() {
         super();
-        this.oldPassword=null;
         this.newPassword=null;
         this.passwordConfirmation=null;
     }
 
-    public ChangePasswordProxy(String oldPassword, String newPassword, String passwordConfirmation) {
-        this.oldPassword = oldPassword;
+    public ChangePasswordProxy(String newPassword, String passwordConfirmation) {
         this.newPassword = newPassword;
         this.passwordConfirmation = passwordConfirmation;
-    }
-
-    public String getOldPassword() {
-        return oldPassword;
-    }
-
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
     }
 
     public String getNewPassword() {
