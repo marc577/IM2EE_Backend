@@ -4,7 +4,6 @@ import entities.DeviceBasic;
 import entities.Pool;
 import entities.User;
 import proxies.DeviceBasicProxy;
-import proxies.PoolDeviceBasicProxy;
 import security.RequiresWebToken;
 
 import javax.transaction.Transactional;
@@ -61,7 +60,7 @@ public class DeviceBasicService extends SuperService {
     }
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @RequiresWebToken
@@ -79,7 +78,7 @@ public class DeviceBasicService extends SuperService {
     }
 
     @GET
-    @Path("/{idPool}")
+    @Path("/pool/{idPool}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @RequiresWebToken
