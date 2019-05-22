@@ -13,7 +13,7 @@ public class Pool {
     @GeneratedValue
     private long id;
 
-    @Column(length = 64)
+    @Column(length = 256)
     private String description;
 
     @ManyToOne

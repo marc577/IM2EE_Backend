@@ -16,7 +16,7 @@ public class Product {
     @Column
     private String titel;
 
-    @Column
+    @Column(columnDefinition = "text")
     private String description;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

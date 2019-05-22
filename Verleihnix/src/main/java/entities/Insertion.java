@@ -18,10 +18,13 @@ public class Insertion {
     private Pool pool;
 
     @Column
+    private String title;
+
+    @Column(columnDefinition = "text")
     private String description;
 
-    @Column
-    private StringBuilder image;
+    @OneToMany(mappedBy = "insertion", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<InsertionImage> insertionImages = new ArrayList<>();
 
     @Column
     private boolean active;
@@ -37,11 +40,11 @@ public class Insertion {
         super();
     }
 
-    public Insertion(Pool pool, String description, StringBuilder image, boolean active, Product product) {
+    public Insertion(Pool pool,String title, String description, boolean active, Product product) {
         super();
         this.pool = pool;
+        this.title = title;
         this.description = description;
-        this.image = image;
         this.active = active;
         this.product = product;
     }
@@ -70,12 +73,20 @@ public class Insertion {
         this.description = description;
     }
 
-    public StringBuilder getImage() {
-        return image;
+    public String getTitle() {
+        return title;
     }
 
-    public void setImage(StringBuilder image) {
-        this.image = image;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<InsertionImage> getInsertionImages() {
+        return insertionImages;
+    }
+
+    public void setInsertionImages(List<InsertionImage> insertionImages) {
+        this.insertionImages = insertionImages;
     }
 
     public boolean isActive() {
