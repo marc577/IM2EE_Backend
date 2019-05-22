@@ -35,7 +35,6 @@ public class PoolService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-	@Transactional
     @RequiresWebToken
     public Response editPool(@Valid PoolProxy pp) {
         String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
@@ -65,7 +64,6 @@ public class PoolService {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-	@Transactional
     @RequiresWebToken
     public Response getPool(@PathParam("id") long id) {
         String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
@@ -85,7 +83,6 @@ public class PoolService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	@Transactional
     @RequiresWebToken
     public Response getPools() {
         String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
@@ -100,7 +97,6 @@ public class PoolService {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-	@Transactional
     @RequiresWebToken
     public Response deletePool(@PathParam("id") long id) {
         String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
@@ -116,6 +112,7 @@ public class PoolService {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         //em.remove(p);
+        em.refresh(p);
         em.createQuery("DELETE from Pool p where p.id = :id").setParameter("id", p.getId()).executeUpdate();
 		//em.flush();
         //p = null;

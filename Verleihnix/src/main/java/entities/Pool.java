@@ -11,6 +11,7 @@ public class Pool {
 
     @Id
     @GeneratedValue
+    @Column
     private long id;
 
     @Column(length = 256)
@@ -20,8 +21,7 @@ public class Pool {
     @JsonIgnore
     private User user;
 
-
-    @OneToMany(mappedBy = "pool", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pool",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Insertion> insertions = new ArrayList<>();
 
 
@@ -56,6 +56,7 @@ public class Pool {
         this.user = user;
     }
 
+    //@OneToMany(mappedBy = "pool",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Insertion> getInsertions() {
         return insertions;
     }
