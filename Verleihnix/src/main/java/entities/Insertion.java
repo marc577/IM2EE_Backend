@@ -23,8 +23,14 @@ public class Insertion {
     @Column(columnDefinition = "text")
     private String description;
 
+    /*
     @OneToMany(mappedBy = "insertion", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<InsertionImage> insertionImages = new ArrayList<>();
+     */
+
+    @Lob
+    @Column
+    private StringBuilder image;
 
     @Column
     private boolean active;
@@ -81,12 +87,22 @@ public class Insertion {
         this.title = title;
     }
 
+    /*
     public List<InsertionImage> getInsertionImages() {
         return insertionImages;
     }
 
     public void setInsertionImages(List<InsertionImage> insertionImages) {
         this.insertionImages = insertionImages;
+    }
+     */
+
+    public StringBuilder getImage() {
+        return image;
+    }
+
+    public void setImage(StringBuilder image) {
+        this.image = image;
     }
 
     public boolean isActive() {
