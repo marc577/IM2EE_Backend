@@ -11,7 +11,6 @@ public class Pool {
 
     @Id
     @GeneratedValue
-    @Column
     private long id;
 
     @Column(length = 256)

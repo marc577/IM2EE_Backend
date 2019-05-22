@@ -111,11 +111,9 @@ public class PoolService {
         if(p.getUser() != u){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        //em.remove(p);
-        em.refresh(p);
+
         em.createQuery("DELETE from Pool p where p.id = :id").setParameter("id", p.getId()).executeUpdate();
-		//em.flush();
-        //p = null;
+
         return Response.status(Response.Status.OK).build();
     }
 

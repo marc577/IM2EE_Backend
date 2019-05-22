@@ -128,4 +128,5 @@ public class Insertion {
     public void setInsertionStateCalendars(List<InsertionStateCalendar> insertionStateCalendars) {
         this.insertionStateCalendars = insertionStateCalendars;
     }
+
 }

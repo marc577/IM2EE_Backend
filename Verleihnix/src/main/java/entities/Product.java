@@ -14,12 +14,13 @@ public class Product {
     private long id;
 
     @Column
-    private String titel;
+    private String title;
 
     @Column(columnDefinition = "text")
     private String description;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Insertion>  insertions = new ArrayList<>();
 
     public Product() {
@@ -28,7 +29,7 @@ public class Product {
 
     public Product(String titel, String description) {
         super();
-        this.titel = titel;
+        this.title = titel;
         this.description = description;
     }
 
@@ -40,12 +41,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String titel) {
+        this.title = titel;
     }
 
     public String getDescription() {
