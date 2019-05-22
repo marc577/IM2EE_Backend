@@ -14,7 +14,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.List;
+
 
 
 
@@ -76,7 +78,14 @@ public class UserService extends SuperService{
             if(user.getId() == uneu.getId()){
                 uneu.setFirstName(userProxy.getFirstName());
                 uneu.setLastName(userProxy.getLastName());
-                uneu.setEmail(userProxy.getEmail());
+                if (!uneu.getEmail().equals(userProxy.getEmail())) {
+                    if(!this.emailExists(userProxy.getEmail())) {
+                        uneu.setEmail(userProxy.getEmail());
+                    } else {
+                        return Response.status(Response.Status.NOT_ACCEPTABLE).entity("Email is already in use").build();
+                    }
+
+                }
                 em.persist(uneu);
                 return Response.status(Response.Status.OK).entity(userProxy).build();
             }else{

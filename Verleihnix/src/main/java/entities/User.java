@@ -25,7 +25,7 @@ public class User {
     @Column(length = 64)
     private String firstName;
 
-    @Column(length = 64)
+    @Column(length = 64, unique=true)
     private String email;
 
     @XmlTransient
