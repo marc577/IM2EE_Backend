@@ -118,13 +118,13 @@ public class UserService extends SuperService{
 
         try {
             User user = this.getUserByHttpToken();
-            if (!(changePasswordProxy.getNewPassword().equals(changePasswordProxy.getPasswordConfirmation()))) {
+            if(user.validate(changePasswordProxy.getPasswordConfirmation())){
+                user.setPassword(changePasswordProxy.getNewPassword());
+                em.persist(user);
+                return Response.status(Response.Status.OK).build();
+            }else{
                 return Response.status(Response.Status.BAD_REQUEST).entity("Password confirmation does not match").build();
             }
-            user.setPassword(changePasswordProxy.getNewPassword());
-            em.persist(user);
-            return Response.status(Response.Status.OK).entity(user).build();
-
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

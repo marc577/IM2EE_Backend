@@ -47,6 +47,9 @@ public class User {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.pools = Lists.newArrayList();
     }
+    public boolean validate(String pw){
+        return BCrypt.checkpw(pw, this.password);
+    }
 
     public String getToken() {
         return token;
