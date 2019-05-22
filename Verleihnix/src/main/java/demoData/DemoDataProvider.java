@@ -44,6 +44,7 @@ public class DemoDataProvider {
         }
     }
 
+
     private final StringBuilder imgBase64HP1 = new StringBuilder();
     private final StringBuilder imgBase64HP2 = new StringBuilder();
     private final StringBuilder imgBase64ACDC1 = new StringBuilder();
@@ -98,6 +99,7 @@ public class DemoDataProvider {
         em.persist(insertion4);
 
         //InsertionImages
+        /*
         InsertionImage img1 = new InsertionImage(imgBase64HP1,insertion1);
         InsertionImage img2 = new InsertionImage(imgBase64HP2,insertion2);
         InsertionImage img3 = new InsertionImage(imgBase64ACDC1,insertion3);
@@ -106,6 +108,8 @@ public class DemoDataProvider {
         em.persist(img2);
         em.persist(img3);
         em.persist(img4);
+
+         */
 
         // InsertionStateCalendars
         InsertionStateCalendar i1 = new InsertionStateCalendar(
