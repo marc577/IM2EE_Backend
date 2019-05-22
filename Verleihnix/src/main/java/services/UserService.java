@@ -69,20 +69,19 @@ public class UserService extends SuperService{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @RequiresWebToken
-    public Response edit(@Valid UserProxy userOutProxy) {
-
+    public Response edit(@Valid UserProxy userProxy) {
         try {
             User user = this.getUserByHttpToken();
-            if (!(userOutProxy.getEmail().equals(user.getEmail())) && emailExists(userOutProxy.getEmail())) {
-                return Response.status(Response.Status.BAD_REQUEST).entity("Email already exists").build();
+            User uneu = em.find(User.class, user.getId());
+            if(user.getId() == uneu.getId()){
+                uneu.setFirstName(userProxy.getFirstName());
+                uneu.setLastName(userProxy.getLastName());
+                uneu.setEmail(userProxy.getEmail());
+                em.persist(uneu);
+                return Response.status(Response.Status.OK).entity(userProxy).build();
+            }else{
+                return Response.status(Response.Status.UNAUTHORIZED).build();
             }
-            user.setToken(userOutProxy.getToken());
-            user.setFirstName(userOutProxy.getFirstName());
-            user.setLastName(userOutProxy.getLastName());
-            user.setEmail(userOutProxy.getEmail());
-            em.persist(user);
-            return Response.status(Response.Status.OK).entity(user).build();
-
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -97,6 +96,7 @@ public class UserService extends SuperService{
         try {
             User user = this.getUserByHttpToken();
             UserProxy up = new UserProxy();
+            up.setId(user.getId());
             up.setToken(user.getToken());
             up.setFirstName(user.getFirstName());
             up.setLastName(user.getLastName());
