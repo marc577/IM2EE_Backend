@@ -26,7 +26,7 @@ public class InsertionStateCalendar {
     private Date dateTo;
 
     @Column
-    private String commentRequestor;
+    private String commentRequester;
 
     @Column
     private String commentOwner;
@@ -43,13 +43,13 @@ public class InsertionStateCalendar {
         super();
     }
 
-    public InsertionStateCalendar(Insertion insertion, State state, Date dateFrom, Date dateTo, String commentRequestor, String commentOwner, Date editAt, User requester) {
+    public InsertionStateCalendar(Insertion insertion, State state, Date dateFrom, Date dateTo, String commentRequester, String commentOwner, Date editAt, User requester) {
         super();
         this.insertion = insertion;
         this.state = state;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.commentRequestor = commentRequestor;
+        this.commentRequester = commentRequester;
         this.commentOwner = commentOwner;
         this.editAt = editAt;
         this.requester = requester;
@@ -95,12 +95,12 @@ public class InsertionStateCalendar {
         this.dateTo = dateTo;
     }
 
-    public String getCommentRequestor() {
-        return commentRequestor;
+    public String getCommentRequester() {
+        return commentRequester;
     }
 
-    public void setCommentRequestor(String commentRequestor) {
-        this.commentRequestor = commentRequestor;
+    public void setCommentRequester(String commentRequester) {
+        this.commentRequester = commentRequester;
     }
 
     public String getCommentOwner() {
