@@ -39,7 +39,7 @@ public class Insertion {
     @JsonIgnore
     private Product product;
 
-    @OneToMany(mappedBy = "insertion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "insertion", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
     private List<InsertionStateCalendar> insertionStateCalendars = new ArrayList<>();
 
     public Insertion() {

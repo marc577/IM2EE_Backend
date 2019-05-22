@@ -19,7 +19,7 @@ public class Product {
     @Column(columnDefinition = "text")
     private String description;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
     @JsonIgnore
     private List<Insertion>  insertions = new ArrayList<>();
 

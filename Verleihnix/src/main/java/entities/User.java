@@ -31,7 +31,7 @@ public class User {
     @XmlTransient
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Pool> pools = new ArrayList<Pool>();
 
     public User() {
