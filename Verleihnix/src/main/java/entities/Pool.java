@@ -35,6 +35,7 @@ public class Pool implements IEntity {
     }
 
     public void deleteCascade() {
+        EntityHelper.deleteEntity(this, this.id);
 
     }
 

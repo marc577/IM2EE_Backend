@@ -2,6 +2,7 @@ package entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.ejb.EnterpriseBean;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class Product implements IEntity {
     }
 
     public void deleteCascade() {
-
+        EntityHelper.deleteEntity(this, this.id);
     }
 
     public long getId() {

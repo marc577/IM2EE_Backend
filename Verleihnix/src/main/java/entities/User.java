@@ -49,7 +49,7 @@ public class User implements IEntity {
     }
 
     public void deleteCascade() {
-
+        EntityHelper.deleteEntity(this, this.id);
     }
     public boolean validate(String pw){
         return BCrypt.checkpw(pw, this.password);

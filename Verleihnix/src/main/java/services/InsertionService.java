@@ -14,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/insertion")
@@ -75,6 +76,82 @@ public class InsertionService extends SuperService {
             }
         }
         return Response.status(Response.Status.OK).entity(insertionOutProxy).build();
+    }
+
+    @GET
+    @Path("insertionPool/{poolId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @RequiresWebToken
+    public Response getInsertions(@PathParam("poolId") long poolId) {
+
+        try {
+            User user = getUserByHttpToken();
+            List<InsertionOutProxy> insertionOutProxies = new ArrayList<>();
+            Pool pool = this.findPool(poolId, user);
+            InsertionOutProxy insertionOutProxy;
+            for (Insertion insertion : pool.getInsertions()) {
+                insertionOutProxy = new InsertionOutProxy();
+                insertionOutProxy.setInsertion(insertion);
+                insertionOutProxy.setProduct(insertion.getProduct());
+                insertionOutProxies.add(insertionOutProxy);
+            }
+            return Response.status(Response.Status.OK).entity(insertionOutProxies).build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (NotAuthorizedException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @RequiresWebToken
+    public Response getInsertion(@PathParam("id") long insertionId) {
+
+        try {
+            User user = getUserByHttpToken();
+            Insertion insertion = this.findInsertion(insertionId, user);
+            InsertionOutProxy insertionOutProxy = new InsertionOutProxy();
+            insertionOutProxy.setInsertion(insertion);
+            insertionOutProxy.setProduct(insertion.getProduct());
+            return Response.status(Response.Status.OK).entity(insertionOutProxy).build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (NotAuthorizedException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @RequiresWebToken
+    public Response deleteInsertion(@PathParam("id") long insertionId) {
+        try {
+            User user = getUserByHttpToken();
+            Insertion insertion = this.findInsertion(insertionId, user);
+            insertion.deleteCascade();
+            return Response.status(Response.Status.OK).build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (NotAuthorizedException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    private Insertion findInsertion(long insertionId, User u) {
+        Insertion insertion = em.find(Insertion.class, insertionId);
+        if(insertion == null){
+            throw new NotFoundException();
+        }
+        if(insertion.getPool().getUser().getId() != u.getId()){
+            throw new NotAuthorizedException(Response.Status.UNAUTHORIZED);
+        }
+        return insertion;
     }
 
     private Product findProduct(long productId, User u, String productTitle, String productDescription) throws NotAcceptableException, IllegalArgumentException {

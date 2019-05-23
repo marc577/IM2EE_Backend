@@ -2,6 +2,9 @@ package entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.ejb.EnterpriseBean;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +54,11 @@ public class Insertion implements IEntity {
     }
 
     public void deleteCascade() {
-
+        for (InsertionStateCalendar insertionStateCalendar : this.insertionStateCalendars) {
+            insertionStateCalendar.deleteCascade();
+        }
+        //EntityHelper.deleteEntity(this, this.id);
+        EntityHelper.deleteInsertion(this);
     }
 
     public long getId() {

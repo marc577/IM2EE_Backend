@@ -56,7 +56,7 @@ public class InsertionStateCalendar implements IEntity {
     }
 
     public void deleteCascade() {
-
+        EntityHelper.deleteEntity(this, this.id);
     }
 
     public long getId() {
