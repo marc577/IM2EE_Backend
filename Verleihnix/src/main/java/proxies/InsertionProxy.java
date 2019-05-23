@@ -21,9 +21,11 @@ public class InsertionProxy {
     private ProductImgProxy product;
 
     @JsonProperty
+    @NotNull
     private String title;
 
     @JsonProperty
+    @NotNull
     private String description;
 
     @JsonProperty
