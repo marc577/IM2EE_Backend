@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name="Product")
-public class Product implements IEntity {
+public class Product {
 
     @Id
     @GeneratedValue
@@ -34,10 +34,6 @@ public class Product implements IEntity {
         super();
         this.title = titel;
         this.description = description;
-    }
-
-    public void deleteCascade() {
-        EntityHelper.deleteEntity(this, this.id);
     }
 
     public long getId() {

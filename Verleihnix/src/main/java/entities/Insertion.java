@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name="Insertion")
-public class Insertion implements IEntity {
+public class Insertion {
 
     @Id
     @GeneratedValue
@@ -51,14 +51,6 @@ public class Insertion implements IEntity {
         this.description = description;
         this.active = active;
         this.product = product;
-    }
-
-    public void deleteCascade() {
-        for (InsertionStateCalendar insertionStateCalendar : this.insertionStateCalendars) {
-            insertionStateCalendar.deleteCascade();
-        }
-        //EntityHelper.deleteEntity(this, this.id);
-        EntityHelper.deleteInsertion(this);
     }
 
     public long getId() {

@@ -1,9 +1,6 @@
 package services;
 
-import entities.Insertion;
-import entities.Pool;
-import entities.Product;
-import entities.User;
+import entities.*;
 import proxies.InsertionOutProxy;
 import proxies.InsertionProxy;
 import security.RequiresWebToken;
@@ -134,7 +131,10 @@ public class InsertionService extends SuperService {
         try {
             User user = getUserByHttpToken();
             Insertion insertion = this.findInsertion(insertionId, user);
-            insertion.deleteCascade();
+            for(InsertionStateCalendar insertionStateCalendar : insertion.getInsertionStateCalendars()) {
+                em.createQuery("DELETE from InsertionStateCalendar isc where isc.id = :id").setParameter("id", insertionStateCalendar.getId()).executeUpdate();
+            }
+            em.createQuery("DELETE from Insertion i where i.id = :id").setParameter("id", insertion.getId()).executeUpdate();
             return Response.status(Response.Status.OK).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
