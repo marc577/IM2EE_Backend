@@ -15,36 +15,6 @@ import java.util.List;
 @Path("/product")
 public class ProductService extends SuperService{
 
-    /*@POST
-    @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @RequiresWebToken
-    public Response edit(@Valid UserProxy userProxy) {
-        try {
-            User user = this.getUserByHttpToken();
-            User uneu = em.find(User.class, user.getId());
-            if(user.getId() == uneu.getId()){
-                uneu.setFirstName(userProxy.getFirstName());
-                uneu.setLastName(userProxy.getLastName());
-                if (!uneu.getEmail().equals(userProxy.getEmail())) {
-                    if(!this.emailExists(userProxy.getEmail())) {
-                        uneu.setEmail(userProxy.getEmail());
-                    } else {
-                        return Response.status(Response.Status.NOT_ACCEPTABLE).entity("Email is already in use").build();
-                    }
-
-                }
-                em.persist(uneu);
-                return Response.status(Response.Status.OK).entity(userProxy).build();
-            }else{
-                return Response.status(Response.Status.UNAUTHORIZED).build();
-            }
-        } catch (NotAuthorizedException e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
-    }*/
-
     @GET
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
