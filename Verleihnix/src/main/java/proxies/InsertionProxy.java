@@ -17,19 +17,14 @@ public class InsertionProxy {
     private long poolId;
 
     @JsonProperty
-    private long productId;
+    @NotNull
+    private ProductImgProxy product;
 
     @JsonProperty
-    private String insertionTitle;
+    private String title;
 
     @JsonProperty
-    private String insertionDescription;
-
-    @JsonProperty
-    private String productTitle;
-
-    @JsonProperty
-    private String productDescription;
+    private String description;
 
     @JsonProperty
     private StringBuilder image;
@@ -41,11 +36,9 @@ public class InsertionProxy {
         super();
         this.id = -1;
         this.poolId = -1;
-        this.productId = -1;
-        this.insertionTitle = null;
-        this.insertionDescription = "";
-        this.productTitle = null;
-        this.productDescription = "";
+        this.product = new ProductImgProxy();
+        this.title = null;
+        this.description = null;
         this.image = new StringBuilder();
         this.active = true;
     }
@@ -54,11 +47,9 @@ public class InsertionProxy {
         super();
         this.id = id;
         this.poolId = poolId;
-        this.productId = productId;
-        this.insertionTitle = insertionTitle;
-        this.insertionDescription = insertionDescription;
-        this.productTitle = productTitle;
-        this.productDescription = productDescription;
+        this.product = new ProductImgProxy(productId,productTitle, productDescription);
+        this.title = insertionTitle;
+        this.description = insertionDescription;
         this.image = image;
         this.active = active;
     }
@@ -79,44 +70,28 @@ public class InsertionProxy {
         this.poolId = poolId;
     }
 
-    public long getProductId() {
-        return productId;
+    public ProductImgProxy getProduct() {
+        return product;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setProduct(ProductImgProxy product) {
+        this.product = product;
     }
 
-    public String getInsertionTitle() {
-        return insertionTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setInsertionTitle(String insertionTitle) {
-        this.insertionTitle = insertionTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getInsertionDescription() {
-        return insertionDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setInsertionDescription(String insertionDescription) {
-        this.insertionDescription = insertionDescription;
-    }
-
-    public String getProductTitle() {
-        return productTitle;
-    }
-
-    public void setProductTitle(String productTitle) {
-        this.productTitle = productTitle;
-    }
-
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public StringBuilder getImage() {

@@ -22,10 +22,11 @@ public class InsertionService extends SuperService {
 
     @POST
     @Transactional
+    @Path("/{poolId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @RequiresWebToken
-    public Response editInsertion(@Valid InsertionProxy insertionProxy) {
+    public Response editInsertion(@PathParam("poolId") long poolId, @Valid InsertionProxy insertionProxy) {
         User user = this.getUserByHttpToken();
         if(user == null){
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -34,9 +35,9 @@ public class InsertionService extends SuperService {
         InsertionOutProxy insertionOutProxy = new InsertionOutProxy();
         if(insertionProxy.getId() == -1){
             try {
-                Pool pool = this.findPool(insertionProxy.getPoolId(), user);
-                Product product = this.findProduct(insertionProxy.getProductId(), user, insertionProxy.getProductTitle(), insertionProxy.getProductDescription());
-                insertion = new Insertion(pool, insertionProxy.getInsertionTitle(), insertionProxy.getInsertionDescription(), true, product);
+                Pool pool = this.findPool(poolId, user);
+                Product product = this.findProduct(insertionProxy.getProduct().getId(), user, insertionProxy.getProduct().getTitle(), insertionProxy.getProduct().getTitle());
+                insertion = new Insertion(pool, insertionProxy.getTitle(), insertionProxy.getDescription(), true, product);
                 em.persist(insertion);
                 insertionOutProxy.setInsertion(insertion);
                 insertionOutProxy.setProduct(insertion.getProduct());
@@ -56,12 +57,12 @@ public class InsertionService extends SuperService {
                 return Response.status(Response.Status.UNAUTHORIZED).build();
             }
             try {
-                insertion.setPool(this.findPool(insertionProxy.getPoolId(), user));
-                insertion.setTitle(insertionProxy.getInsertionTitle());
-                insertion.setDescription(insertionProxy.getInsertionDescription());
+                insertion.setPool(this.findPool(poolId, user));
+                insertion.setTitle(insertionProxy.getTitle());
+                insertion.setDescription(insertionProxy.getDescription());
                 insertion.setImage(insertionProxy.getImage());
                 insertion.setActive(insertionProxy.isActive());
-                insertion.setProduct(this.findProduct(insertionProxy.getProductId(), user, insertionProxy.getProductTitle(), insertionProxy.getProductDescription()));
+                insertion.setProduct(this.findProduct(insertionProxy.getProduct().getId(), user, insertionProxy.getProduct().getTitle(), insertionProxy.getProduct().getDescription()));
                 em.persist(insertion);
                 insertionOutProxy.setInsertion(insertion);
                 insertionOutProxy.setProduct(insertion.getProduct());

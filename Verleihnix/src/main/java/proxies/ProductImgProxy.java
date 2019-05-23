@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonRootName("Pool")
+@JsonRootName("Product")
 public class ProductImgProxy {
 
 	@JsonProperty
@@ -31,9 +31,10 @@ public class ProductImgProxy {
 		this.description = null;
 	}
 
-	public ProductImgProxy(long id, String description){
+	public ProductImgProxy(long id, String title, String description){
 		super();
 		this.id = id;
+		this.title = title;
 		this.description = description;
 	}
 
