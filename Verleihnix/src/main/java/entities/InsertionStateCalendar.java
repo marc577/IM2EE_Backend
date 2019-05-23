@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name="InsertionStateCalendar")
-public class InsertionStateCalendar {
+public class InsertionStateCalendar implements IEntity {
 
     @Id
     @GeneratedValue
@@ -53,6 +53,10 @@ public class InsertionStateCalendar {
         this.commentOwner = commentOwner;
         this.editAt = editAt;
         this.requester = requester;
+    }
+
+    public void deleteCascade() {
+
     }
 
     public long getId() {

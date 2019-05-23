@@ -3,17 +3,19 @@ package entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name="Product")
-public class Product {
+public class Product implements IEntity {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @Column
+    @Column (unique=true)
+    @NotNull
     private String title;
 
     @Column(columnDefinition = "text")
@@ -31,6 +33,10 @@ public class Product {
         super();
         this.title = titel;
         this.description = description;
+    }
+
+    public void deleteCascade() {
+
     }
 
     public long getId() {

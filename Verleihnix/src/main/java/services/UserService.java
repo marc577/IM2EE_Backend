@@ -145,7 +145,6 @@ public class UserService extends SuperService{
                 "WHERE email= ?")
                 .setParameter(1,email)
                 .getResultList();
-        System.out.println("Anzahl: " + resultList);
         return (resultList.get(0) != BigInteger.valueOf(0));
     }
 

@@ -10,7 +10,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 
 @Entity(name = "User")
-public class User {
+public class User implements IEntity {
 
     @Id
     @GeneratedValue
@@ -46,6 +46,10 @@ public class User {
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.pools = Lists.newArrayList();
+    }
+
+    public void deleteCascade() {
+
     }
     public boolean validate(String pw){
         return BCrypt.checkpw(pw, this.password);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name="Insertion")
-public class Insertion {
+public class Insertion implements IEntity {
 
     @Id
     @GeneratedValue
@@ -22,11 +22,6 @@ public class Insertion {
 
     @Column(columnDefinition = "text")
     private String description;
-
-    /*
-    @OneToMany(mappedBy = "insertion", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<InsertionImage> insertionImages = new ArrayList<>();
-     */
 
     @Lob
     @Column
@@ -53,6 +48,10 @@ public class Insertion {
         this.description = description;
         this.active = active;
         this.product = product;
+    }
+
+    public void deleteCascade() {
+
     }
 
     public long getId() {
@@ -86,16 +85,6 @@ public class Insertion {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    /*
-    public List<InsertionImage> getInsertionImages() {
-        return insertionImages;
-    }
-
-    public void setInsertionImages(List<InsertionImage> insertionImages) {
-        this.insertionImages = insertionImages;
-    }
-     */
 
     public StringBuilder getImage() {
         return image;

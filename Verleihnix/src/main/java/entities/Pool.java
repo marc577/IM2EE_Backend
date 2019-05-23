@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Pool")
-public class Pool {
+public class Pool implements IEntity {
 
     @Id
     @GeneratedValue
@@ -32,6 +32,10 @@ public class Pool {
         super();
         this.description = description;
         this.user = user;
+    }
+
+    public void deleteCascade() {
+
     }
 
     public long getId() {
