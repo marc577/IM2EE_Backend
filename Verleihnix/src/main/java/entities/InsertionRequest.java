@@ -3,10 +3,12 @@ package entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@Entity(name="InsertionStateCalendar")
-public class InsertionStateCalendar {
+@Entity(name="InsertionRequest")
+public class InsertionRequest {
 
     @Id
     @GeneratedValue
@@ -26,33 +28,26 @@ public class InsertionStateCalendar {
     private Date dateTo;
 
     @Column
-    private String commentRequester;
+    private long editAt;
 
-    @Column
-    private String commentOwner;
-
-    @Column
-    private Date editAt;
-
-    @ManyToOne
     @JsonIgnore
-    private User requester;
+    private long requesterId;
 
+    @OneToMany(mappedBy = "insertionRequest",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<ChatEntry> chatEntries = new ArrayList<>();
 
-    public InsertionStateCalendar() {
+    public InsertionRequest() {
         super();
     }
 
-    public InsertionStateCalendar(Insertion insertion, State state, Date dateFrom, Date dateTo, String commentRequester, String commentOwner, Date editAt, User requester) {
+    public InsertionRequest(Insertion insertion, State state, Date dateFrom, Date dateTo, long editAt, long requesterId) {
         super();
         this.insertion = insertion;
         this.state = state;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.commentRequester = commentRequester;
-        this.commentOwner = commentOwner;
         this.editAt = editAt;
-        this.requester = requester;
+        this.requesterId = requesterId;
     }
 
     public long getId() {
@@ -95,36 +90,20 @@ public class InsertionStateCalendar {
         this.dateTo = dateTo;
     }
 
-    public String getCommentRequester() {
-        return commentRequester;
-    }
-
-    public void setCommentRequester(String commentRequester) {
-        this.commentRequester = commentRequester;
-    }
-
-    public String getCommentOwner() {
-        return commentOwner;
-    }
-
-    public void setCommentOwner(String commentOwner) {
-        this.commentOwner = commentOwner;
-    }
-
-    public Date getEditAt() {
+    public long getEditAt() {
         return editAt;
     }
 
-    public void setEditAt(Date editAt) {
+    public void setEditAt(long editAt) {
         this.editAt = editAt;
     }
 
-    public User getRequester() {
-        return requester;
+    public long getRequester() {
+        return requesterId;
     }
 
-    public void setRequester(User requester) {
-        this.requester = requester;
+    public void setRequester(long requesterId) {
+        this.requesterId = requesterId;
     }
 
 }

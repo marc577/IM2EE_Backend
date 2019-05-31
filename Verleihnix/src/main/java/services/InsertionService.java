@@ -132,10 +132,7 @@ public class InsertionService extends SuperService {
         try {
             User user = getUserByHttpToken();
             Insertion insertion = this.findInsertion(insertionId, user);
-            for(InsertionStateCalendar insertionStateCalendar : insertion.getInsertionStateCalendars()) {
-                em.createQuery("DELETE from InsertionStateCalendar isc where isc.id = :id").setParameter("id", insertionStateCalendar.getId()).executeUpdate();
-            }
-            em.createQuery("DELETE from Insertion i where i.id = :id").setParameter("id", insertion.getId()).executeUpdate();
+            this.deletionHelper.deleteInsertion(insertion);
             return Response.status(Response.Status.OK).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();

@@ -16,6 +16,9 @@ public abstract class SuperService {
     @Inject
     HttpServletRequest httpServletRequest;
 
+    @Inject
+    DeletionHelper deletionHelper;
+
     @PersistenceContext
     EntityManager em;
 

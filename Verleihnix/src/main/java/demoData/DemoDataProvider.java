@@ -112,33 +112,27 @@ public class DemoDataProvider {
          */
 
         // InsertionStateCalendars
-        InsertionStateCalendar i1 = new InsertionStateCalendar(
+        InsertionRequest i1 = new InsertionRequest(
                 insertion1,
                 State.requested,
                 getDateOfString("01.07.2019"),
                 getDateOfString("15.07.2019"),
-                "Ich kann es abholen",
-                "",
-                new Date(System.currentTimeMillis()),
-                this.alex);
-        InsertionStateCalendar i2 = new InsertionStateCalendar(
+                System.currentTimeMillis(),
+                this.alex.getId());
+        InsertionRequest i2 = new InsertionRequest(
                 insertion1,
                 State.declined,
                 getDateOfString("01.08.2019"),
                 getDateOfString("15.08.2019"),
-                "Würde mich echt freuen, wenn das klappen würde :)",
-                "Sorry, aber da wollte ich es selber lesen.",
-                new Date(System.currentTimeMillis()),
-                this.alex);
-        InsertionStateCalendar i3 = new InsertionStateCalendar(
+                System.currentTimeMillis(),
+                this.alex.getId());
+        InsertionRequest i3 = new InsertionRequest(
                 insertion1,
                 State.accepted,
                 getDateOfString("03.09.2019"),
                 getDateOfString("04.09.2019"),
-                "Ich kann es abholen",
-                "Jo, geht klar. Aber ich schätze du brauchst länger als einen Tag, oder? Wenn ja, dann reserviere es einfach etwas länger.",
-                new Date(System.currentTimeMillis()),
-                this.alex);
+                System.currentTimeMillis(),
+                this.alex.getId());
 
         em.persist(i1);
         em.persist(i2);

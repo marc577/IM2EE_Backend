@@ -2,9 +2,6 @@ package entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.ejb.EnterpriseBean;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +35,7 @@ public class Insertion {
     private Product product;
 
     @OneToMany(mappedBy = "insertion", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<InsertionStateCalendar> insertionStateCalendars = new ArrayList<>();
+    private List<InsertionRequest> insertionRequests = new ArrayList<>();
 
     public Insertion() {
         super();
@@ -109,12 +106,11 @@ public class Insertion {
         this.product = product;
     }
 
-    public List<InsertionStateCalendar> getInsertionStateCalendars() {
-        return insertionStateCalendars;
+    public List<InsertionRequest> getInsertionRequests() {
+        return insertionRequests;
     }
 
-    public void setInsertionStateCalendars(List<InsertionStateCalendar> insertionStateCalendars) {
-        this.insertionStateCalendars = insertionStateCalendars;
+    public void setInsertionRequests(List<InsertionRequest> insertionRequests) {
+        this.insertionRequests = insertionRequests;
     }
-
 }

@@ -127,12 +127,12 @@ public class DeviceElementService extends SuperService {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        List<InsertionStateCalendar> openRequestsDeviceElements = new ArrayList<>();
+        List<InsertionRequest> openRequestsDeviceElements = new ArrayList<>();
         /*
         for (Pool pool : u.getPools()) {
             for (DeviceBasic deviceBasic : pool.getBasicDevices()) {
                 for(DeviceElement deviceElement : deviceBasic.getDeviceElements()) {
-                    for (InsertionStateCalendar insertionStateCalendar : deviceElement.getInsertionStateCalendars()) {
+                    for (InsertionRequest insertionStateCalendar : deviceElement.getInsertionStateCalendars()) {
                         if (insertionStateCalendar.getState()==State.requested) {
                             openRequestsDeviceElements.add(insertionStateCalendar);
                         }

@@ -32,7 +32,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<Pool> pools = new ArrayList<Pool>();
+    private List<Pool> pools = new ArrayList<>();
 
     public User() {
         super();
