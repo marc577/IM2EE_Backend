@@ -20,6 +20,9 @@ public class Insertion {
     @Column
     private String title;
 
+    @Column
+    private float pricePerDay;
+
     @Column(columnDefinition = "text")
     private String description;
 
@@ -41,13 +44,14 @@ public class Insertion {
         super();
     }
 
-    public Insertion(Pool pool,String title, String description, boolean active, Product product) {
+    public Insertion(Pool pool,String title, String description, boolean active, Product product, float pricePerDay) {
         super();
         this.pool = pool;
         this.title = title;
         this.description = description;
         this.active = active;
         this.product = product;
+        this.pricePerDay = pricePerDay;
     }
 
     public long getId() {
@@ -112,5 +116,13 @@ public class Insertion {
 
     public void setInsertionRequests(List<InsertionRequest> insertionRequests) {
         this.insertionRequests = insertionRequests;
+    }
+
+    public double getPricePerDay() {
+        return pricePerDay;
+    }
+
+    public void setPricePerDay(float pricePerDay) {
+        this.pricePerDay = pricePerDay;
     }
 }

@@ -39,6 +39,9 @@ public class InsertionRequestProxy {
     @JsonProperty
     private long editAt;
 
+    @JsonProperty
+    private int type;
+
     public InsertionRequestProxy() {
         super();
         this.id = -1;
@@ -48,6 +51,13 @@ public class InsertionRequestProxy {
         this.insertionId = -1;
         this.requesterId = -1;
         this.message = "";
+        this.type = 1;
+    }
+
+    public InsertionRequestProxy(InsertionRequest insertionRequest, int type) {
+        this(insertionRequest);
+        this.type = type;
+
     }
 
     public InsertionRequestProxy(InsertionRequest insertionRequest) {

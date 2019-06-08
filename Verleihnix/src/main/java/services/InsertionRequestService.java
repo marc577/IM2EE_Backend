@@ -123,7 +123,7 @@ public class InsertionRequestService extends SuperService {
             for(Pool pool : user.getPools()) {
                 for (Insertion insertion : pool.getInsertions()) {
                     for (InsertionRequest insertionRequest : insertion.getInsertionRequests()) {
-                        InsertionRequestProxy insertionRequestProxy = new InsertionRequestProxy(insertionRequest);
+                        InsertionRequestProxy insertionRequestProxy = new InsertionRequestProxy(insertionRequest,1);
                         insertionRequests.add(insertionRequestProxy);
                     }
                 }
@@ -135,7 +135,7 @@ public class InsertionRequestService extends SuperService {
                     .setParameter("id",user.getId())
                     .getResultList();
             for (InsertionRequest insertionRequest : userRequests) {
-                InsertionRequestProxy insertionRequestProxy = new InsertionRequestProxy(insertionRequest);
+                InsertionRequestProxy insertionRequestProxy = new InsertionRequestProxy(insertionRequest,2);
                 insertionRequests.add(insertionRequestProxy);
             }
             return Response.status(Response.Status.OK).entity(insertionRequests).build();

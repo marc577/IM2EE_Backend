@@ -34,7 +34,7 @@ public class InsertionService extends SuperService {
             try {
                 Pool pool = this.findPool(poolId, user);
                 Product product = this.findProduct(insertionProxy.getProduct().getId(), user, insertionProxy.getProduct().getTitle(), insertionProxy.getProduct().getTitle());
-                insertion = new Insertion(pool, insertionProxy.getTitle(), insertionProxy.getDescription(), true, product);
+                insertion = new Insertion(pool, insertionProxy.getTitle(), insertionProxy.getDescription(), true, product, insertionProxy.getPricePerDay());
                 em.persist(insertion);
                 insertionOutProxy.setInsertion(insertion);
                 insertionOutProxy.setProduct(insertion.getProduct());
@@ -59,6 +59,7 @@ public class InsertionService extends SuperService {
                 insertion.setDescription(insertionProxy.getDescription());
                 insertion.setImage(insertionProxy.getImage());
                 insertion.setActive(insertionProxy.isActive());
+                insertion.setPricePerDay(insertionProxy.getPricePerDay());
                 insertion.setProduct(this.findProduct(insertionProxy.getProduct().getId(), user, insertionProxy.getProduct().getTitle(), insertionProxy.getProduct().getDescription()));
                 em.persist(insertion);
                 insertionOutProxy.setInsertion(insertion);
