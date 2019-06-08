@@ -34,6 +34,9 @@ public class InsertionRequestProxy {
     private long requesterId;
 
     @JsonProperty
+    private String message;
+
+    @JsonProperty
     private long editAt;
 
     public InsertionRequestProxy() {
@@ -44,6 +47,7 @@ public class InsertionRequestProxy {
         this.state = null;
         this.insertionId = -1;
         this.requesterId = -1;
+        this.message = "";
     }
 
     public InsertionRequestProxy(InsertionRequest insertionRequest) {
@@ -55,6 +59,22 @@ public class InsertionRequestProxy {
         this.requesterId = insertionRequest.getRequester();
         this.editAt = insertionRequest.getEditAt();
         this.state = insertionRequest.getState();
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public long getEditAt() {
+        return editAt;
+    }
+
+    public void setEditAt(long editAt) {
+        this.editAt = editAt;
     }
 
     public long getRequesterId() {

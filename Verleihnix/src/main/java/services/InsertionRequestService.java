@@ -38,6 +38,10 @@ public class InsertionRequestService extends SuperService {
                 em.persist(insertionRequest);
                 insertionRequestProxy.setId(insertionRequest.getId());
 
+                if (!insertionRequestProxy.getMessage().equals("")) {
+                    persistChatEntry(user.getId(),insertionRequestProxy.getMessage(),insertionRequest);
+                }
+
             } catch (IllegalArgumentException e){
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity("Value is missing").build();
             } catch (NotFoundException e) {
@@ -58,6 +62,9 @@ public class InsertionRequestService extends SuperService {
                 insertionRequest = createInsertionRequest(insertionRequest,insertionRequestProxy,insertion);
                 em.persist(insertionRequest);
                 insertionRequestProxy.setRequesterId(insertionRequest.getRequester());
+                if (!insertionRequestProxy.getMessage().equals("")) {
+                    persistChatEntry(user.getId(),insertionRequestProxy.getMessage(),insertionRequest);
+                }
             } catch (NotAcceptableException e) {
                 return Response.status(Response.Status.NOT_ACCEPTABLE).entity("value is missing").build();
             } catch (IllegalArgumentException e){
@@ -69,6 +76,16 @@ public class InsertionRequestService extends SuperService {
             }
         }
         return Response.status(Response.Status.OK).entity(insertionRequestProxy).build();
+    }
+
+    private void persistChatEntry(long senderId, String message, InsertionRequest insertionRequest) {
+        ChatEntry chatEntry = new ChatEntry();
+        chatEntry.setMessage(message);
+        chatEntry.setReadByListener(false);
+        chatEntry.setSendDate(System.currentTimeMillis());
+        chatEntry.setSenderId(senderId);
+        chatEntry.setInsertionRequest(insertionRequest);
+        em.persist(chatEntry);
     }
 
     private InsertionRequest createInsertionRequest(InsertionRequest insertionRequest, InsertionRequestProxy insertionRequestProxy, Insertion insertion) {
