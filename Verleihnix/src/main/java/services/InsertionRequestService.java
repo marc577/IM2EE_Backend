@@ -2,6 +2,7 @@ package services;
 
 import entities.*;
 import proxies.InsertionRequestProxy;
+import proxies.InsertionRequestStateProxy;
 import security.RequiresWebToken;
 
 import javax.transaction.Transactional;
@@ -32,6 +33,7 @@ public class InsertionRequestService extends SuperService {
                 Insertion insertion = this.findInsertion(insertionRequestProxy.getInsertionId(), user);
                 insertionRequest = new InsertionRequest();
                 insertionRequest = createInsertionRequest(insertionRequest,insertionRequestProxy,insertion);
+                if(insertionRequest.getState() == null) insertionRequest.setState(State.requested);
                 insertionRequest.setRequester(user.getId());
                 insertionRequestProxy.setState(State.requested);
                 insertionRequestProxy.setRequesterId(insertionRequest.getRequester());
@@ -139,6 +141,37 @@ public class InsertionRequestService extends SuperService {
                 insertionRequests.add(insertionRequestProxy);
             }
             return Response.status(Response.Status.OK).entity(insertionRequests).build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (NotAuthorizedException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @POST
+    @Path("state/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @RequiresWebToken
+    public Response setInsertionRequestState(@PathParam("id") long insertionRequestId, InsertionRequestStateProxy p) {
+        try {
+            User user = getUserByHttpToken();
+            InsertionRequest insertionRequest = em.find(InsertionRequest.class, insertionRequestId);
+            switch (p.getState()){
+                case 0:
+                    insertionRequest.setState(State.requested);
+                    break;
+                case 1:
+                    insertionRequest.setState(State.accepted);
+                    break;
+                case 2:
+                    insertionRequest.setState(State.declined);
+                    break;
+            }
+            insertionRequest.setEditAt(System.currentTimeMillis());
+            em.persist(insertionRequest);
+            InsertionRequestProxy op = new InsertionRequestProxy(insertionRequest);
+            return Response.status(Response.Status.OK).entity(op).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } catch (NotAuthorizedException e) {

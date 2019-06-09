@@ -3,7 +3,9 @@ package proxies;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import javax.json.bind.annotation.JsonbNumberFormat;
 import javax.validation.constraints.NotNull;
+
 
 @JsonRootName("Insertion")
 public class InsertionProxy {
