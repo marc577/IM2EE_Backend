@@ -116,7 +116,7 @@ public class ChatService extends SuperService {
         try {
             User user = getUserByHttpToken();
 
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).entity(10).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } catch (NotAuthorizedException e) {
