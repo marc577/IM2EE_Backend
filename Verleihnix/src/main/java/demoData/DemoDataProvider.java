@@ -91,8 +91,8 @@ public class DemoDataProvider {
         // Insertions
         Insertion insertion1 = new Insertion(buecher,"Harry Potter und der Stein der Weisen","Ich kann dieses Buch nur empfehlen!",true,harryPotter1, 0.2f);
         Insertion insertion2 = new Insertion(buecher,"Harry Potter und die Kammer des Schreckens","Leider fehlt hier das letzte Kapitel...",true,harryPotter2, 0.2f);
-        Insertion insertion3 = new Insertion(buecher,"Beste CD von AC/DC","Nur per Abholung!!",true,acdc1, 0.3f);
-        Insertion insertion4 = new Insertion(buecher,"Album von AC/DC","Auf der CD wird das dritte Lied leider nicht mehr richtig abgespielt.",true,acdc2, 0.4f);
+        Insertion insertion3 = new Insertion(cds,"Beste CD von AC/DC","Nur per Abholung!!",true,acdc1, 0.3f);
+        Insertion insertion4 = new Insertion(cds,"Album von AC/DC","Auf der CD wird das dritte Lied leider nicht mehr richtig abgespielt.",true,acdc2, 0.4f);
         em.persist(insertion1);
         em.persist(insertion2);
         em.persist(insertion3);
