@@ -30,6 +30,7 @@ public class Insertion {
     @Column
     private StringBuilder image;
 
+
     @Column
     private boolean active;
 
@@ -118,7 +119,7 @@ public class Insertion {
         this.insertionRequests = insertionRequests;
     }
 
-    public double getPricePerDay() {
+    public float getPricePerDay() {
         return pricePerDay;
     }
 
