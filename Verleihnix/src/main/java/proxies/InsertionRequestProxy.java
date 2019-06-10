@@ -31,6 +31,9 @@ public class InsertionRequestProxy {
     private long insertionId;
 
     @JsonProperty
+    private String insertionTitle;
+
+    @JsonProperty
     private long requesterId;
 
     @JsonProperty
@@ -51,6 +54,7 @@ public class InsertionRequestProxy {
         this.insertionId = -1;
         this.requesterId = -1;
         this.message = "";
+        this.insertionTitle = "";
         this.type = 1;
     }
 
@@ -66,6 +70,7 @@ public class InsertionRequestProxy {
         this.dateFrom = insertionRequest.getDateFrom();
         this.dateTo = insertionRequest.getDateTo();
         this.insertionId = insertionRequest.getInsertion().getId();
+        this.insertionTitle = insertionRequest.getInsertion().getTitle();
         this.requesterId = insertionRequest.getRequester();
         this.editAt = insertionRequest.getEditAt();
         this.state = insertionRequest.getState();
@@ -133,5 +138,21 @@ public class InsertionRequestProxy {
 
     public void setInsertionId(long insertionId) {
         this.insertionId = insertionId;
+    }
+
+    public String getInsertionTitle() {
+        return insertionTitle;
+    }
+
+    public void setInsertionTitle(String insertionTitle) {
+        this.insertionTitle = insertionTitle;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }
