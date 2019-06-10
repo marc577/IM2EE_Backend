@@ -105,5 +105,22 @@ public class ChatService extends SuperService {
         }
     }
 
+    @GET
+    @Path("/new")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @RequiresWebToken
+    public Response setChatEntryListened() {
+        // Anzahl der neuen Nachrichten für den eingeloggten Benutzer
+        // über alle Requests und Chats hinweg
+        try {
+            User user = getUserByHttpToken();
 
+            return Response.status(Response.Status.OK).build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (NotAuthorizedException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
 }

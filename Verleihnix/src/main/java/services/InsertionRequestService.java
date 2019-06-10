@@ -170,6 +170,9 @@ public class InsertionRequestService extends SuperService {
             }
             insertionRequest.setEditAt(System.currentTimeMillis());
             em.persist(insertionRequest);
+            if (!p.getMessage().equals("") && p.getMessage() != null) {
+                persistChatEntry(user.getId(),p.getMessage(),insertionRequest);
+            }
             InsertionRequestProxy op = new InsertionRequestProxy(insertionRequest);
             return Response.status(Response.Status.OK).entity(op).build();
         } catch (NotFoundException e) {
