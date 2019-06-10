@@ -21,7 +21,7 @@ public class Insertion {
     private String title;
 
     @Column
-    private float pricePerDay;
+    private double pricePerDay;
 
     @Column(columnDefinition = "text")
     private String description;
@@ -45,7 +45,7 @@ public class Insertion {
         super();
     }
 
-    public Insertion(Pool pool,String title, String description, boolean active, Product product, float pricePerDay) {
+    public Insertion(Pool pool,String title, String description, boolean active, Product product, double pricePerDay) {
         super();
         this.pool = pool;
         this.title = title;
@@ -119,11 +119,11 @@ public class Insertion {
         this.insertionRequests = insertionRequests;
     }
 
-    public float getPricePerDay() {
+    public double getPricePerDay() {
         return pricePerDay;
     }
 
-    public void setPricePerDay(float pricePerDay) {
+    public void setPricePerDay(double pricePerDay) {
         this.pricePerDay = pricePerDay;
     }
 }

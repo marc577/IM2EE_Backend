@@ -19,7 +19,7 @@ public class ProductOutProxy {
     private String description;
 
     @JsonProperty
-    private float minPricePerDay;
+    private double minPricePerDay;
 
     @JsonProperty
     private List<Insertion> insertions;
@@ -65,11 +65,11 @@ public class ProductOutProxy {
         this.description = description;
     }
 
-    public float getMinPricePerDay() {
+    public double getMinPricePerDay() {
         return minPricePerDay;
     }
 
-    public void setMinPricePerDay(float minPricePerDay) {
+    public void setMinPricePerDay(double minPricePerDay) {
         this.minPricePerDay = minPricePerDay;
     }
 }

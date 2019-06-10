@@ -30,7 +30,7 @@ public class InsertionProxy {
     private String description;
 
     @JsonProperty
-    private float pricePerDay;
+    private double pricePerDay;
 
     @JsonProperty
     private StringBuilder image;
@@ -47,10 +47,10 @@ public class InsertionProxy {
         this.description = null;
         this.image = new StringBuilder();
         this.active = true;
-        this.pricePerDay = 0.0f;
+        this.pricePerDay = 0.0;
     }
 
-    public InsertionProxy(long id, long poolId, long productId, String insertionTitle, String insertionDescription, String productTitle, String productDescription, StringBuilder image, boolean active, float pricePerDay) {
+    public InsertionProxy(long id, long poolId, long productId, String insertionTitle, String insertionDescription, String productTitle, String productDescription, StringBuilder image, boolean active, double pricePerDay) {
         super();
         this.id = id;
         this.poolId = poolId;
@@ -118,11 +118,11 @@ public class InsertionProxy {
         this.active = active;
     }
 
-    public float getPricePerDay() {
+    public double getPricePerDay() {
         return pricePerDay;
     }
 
-    public void setPricePerDay(float pricePerDay) {
+    public void setPricePerDay(double pricePerDay) {
         this.pricePerDay = pricePerDay;
     }
 }

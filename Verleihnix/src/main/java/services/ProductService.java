@@ -34,7 +34,7 @@ public class ProductService extends SuperService{
             po.setTitle(p.getTitle());
             po.setInsertions(p.getInsertions());
 
-            float minPrice = 0;
+            double minPrice = 0;
             for (Insertion i : p.getInsertions()) {
                 minPrice = (minPrice == 0) ? i.getPricePerDay() : 0;
                 minPrice = (i.getPricePerDay() < minPrice ) ? i.getPricePerDay() : minPrice;
