@@ -2,6 +2,7 @@ package proxies;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import entities.Insertion;
 
 import javax.validation.constraints.NotNull;
@@ -25,16 +26,21 @@ public class ProductProxy {
 	@JsonProperty
 	private List<Insertion> insertions = new ArrayList<>();
 
+	@JsonProperty
+	private String image;
+
 	public ProductProxy(){
 		super();
 		this.id = -1;
 		this.description = null;
+		this.image = null;
 	}
 
 	public ProductProxy(long id, String description){
 		super();
 		this.id = id;
 		this.description = description;
+		this.image = null;
 	}
 
 	public long getId() {
@@ -67,5 +73,13 @@ public class ProductProxy {
 
 	public void setInsertions(List<Insertion> insertions) {
 		this.insertions = insertions;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

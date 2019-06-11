@@ -2,8 +2,6 @@ package proxies;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-
-import javax.json.bind.annotation.JsonbNumberFormat;
 import javax.validation.constraints.NotNull;
 
 
@@ -33,9 +31,6 @@ public class InsertionProxy {
     private double pricePerDay;
 
     @JsonProperty
-    private StringBuilder image;
-
-    @JsonProperty
     private boolean active;
 
     public InsertionProxy() {
@@ -45,19 +40,17 @@ public class InsertionProxy {
         this.product = new ProductImgProxy();
         this.title = null;
         this.description = null;
-        this.image = new StringBuilder();
         this.active = true;
         this.pricePerDay = 0.0;
     }
 
-    public InsertionProxy(long id, long poolId, long productId, String insertionTitle, String insertionDescription, String productTitle, String productDescription, StringBuilder image, boolean active, double pricePerDay) {
+    public InsertionProxy(long id, long poolId, long productId, String insertionTitle, String insertionDescription, String productTitle, String productDescription, boolean active, double pricePerDay) {
         super();
         this.id = id;
         this.poolId = poolId;
         this.product = new ProductImgProxy(productId,productTitle, productDescription);
         this.title = insertionTitle;
         this.description = insertionDescription;
-        this.image = image;
         this.active = active;
         this.pricePerDay = pricePerDay;
     }
@@ -100,14 +93,6 @@ public class InsertionProxy {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public StringBuilder getImage() {
-        return image;
-    }
-
-    public void setImage(StringBuilder image) {
-        this.image = image;
     }
 
     public boolean isActive() {

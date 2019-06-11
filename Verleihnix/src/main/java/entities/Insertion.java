@@ -28,8 +28,7 @@ public class Insertion {
 
     @Lob
     @Column
-    private StringBuilder image;
-
+    private String image;
 
     @Column
     private boolean active;
@@ -87,11 +86,11 @@ public class Insertion {
         this.title = title;
     }
 
-    public StringBuilder getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(StringBuilder image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

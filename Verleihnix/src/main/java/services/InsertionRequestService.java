@@ -202,24 +202,24 @@ public class InsertionRequestService extends SuperService {
         }
     }
 
-    /*
+
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @RequiresWebToken
-    public Response deleteInsertion(@PathParam("id") long insertionId) {
+    public Response deleteRequest(@PathParam("id") long requestId) {
         try {
             User user = getUserByHttpToken();
-            Insertion insertion = this.findInsertion(insertionId, user);
-            this.deletionHelper.deleteInsertion(insertion);
-            return Response.status(Response.Status.OK).build();
-        } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } catch (NotAuthorizedException e) {
+            InsertionRequest ir = em.find(InsertionRequest.class, requestId);
+            if(ir.getRequester() == user.getId()){
+                em.remove(ir);
+                return Response.status(Response.Status.OK).build();
+            }
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-     */
 
 }

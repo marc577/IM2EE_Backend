@@ -13,6 +13,9 @@ import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Path("/insertion")
 public class InsertionService extends SuperService {
@@ -36,6 +39,7 @@ public class InsertionService extends SuperService {
                 Product product = this.findProduct(insertionProxy.getProduct().getId(), user, insertionProxy.getProduct().getTitle(), insertionProxy.getProduct().getTitle());
                 insertion = new Insertion(pool, insertionProxy.getTitle(), insertionProxy.getDescription(), true, product, insertionProxy.getPricePerDay());
                 em.persist(insertion);
+                em.flush();
                 insertionOutProxy.setInsertion(insertion);
                 insertionOutProxy.setProduct(insertion.getProduct());
             } catch (IllegalArgumentException e){
@@ -57,7 +61,6 @@ public class InsertionService extends SuperService {
                 insertion.setPool(this.findPool(poolId, user));
                 insertion.setTitle(insertionProxy.getTitle());
                 insertion.setDescription(insertionProxy.getDescription());
-                insertion.setImage(insertionProxy.getImage());
                 insertion.setActive(insertionProxy.isActive());
                 insertion.setPricePerDay(insertionProxy.getPricePerDay());
                 insertion.setProduct(this.findProduct(insertionProxy.getProduct().getId(), user, insertionProxy.getProduct().getTitle(), insertionProxy.getProduct().getDescription()));
@@ -140,6 +143,55 @@ public class InsertionService extends SuperService {
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+    }
+
+
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Path("/image/{id}")
+    @Transactional
+    @RequiresWebToken
+    public Response addByUserId(@PathParam("id") long id, final String imageBase64Data) {
+        if (imageBase64Data == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        // check size
+        final double imageSize = imageBase64Data.length() * 0.75 / 1000;
+
+        if (imageSize > 2048 || imageSize == 0) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        String contentType = "";
+        final Pattern mime = Pattern.compile("^data:([a-zA-Z0-9]+/[a-zA-Z0-9]+).*,.*");
+        final Matcher matcher = mime.matcher(imageBase64Data);
+        if (matcher.find()) {
+            contentType = matcher.group(1).toLowerCase(Locale.ENGLISH);
+        }
+
+        // regex path
+        final Pattern contentTypePattern = Pattern.compile("^image/((jpeg)|(jpg)|(png))$");
+        final Matcher contentTypeMatcher = contentTypePattern.matcher(contentType);
+
+        if (!contentTypeMatcher.find() || contentTypeMatcher.groupCount() == 0) {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+
+        Insertion i = em.find(Insertion.class, id);
+        User u = this.getUserByHttpToken();
+        if(i.getPool().getUser() != u){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        i.setImage(imageBase64Data);
+        try{
+            em.persist(i);
+        }catch (final Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+
+
+        return Response.status(Response.Status.OK).build();
     }
 
     private Insertion findInsertion(long insertionId, User u) {

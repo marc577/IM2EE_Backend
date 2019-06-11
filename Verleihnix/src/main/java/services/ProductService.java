@@ -34,8 +34,12 @@ public class ProductService extends SuperService{
             po.setTitle(p.getTitle());
             po.setInsertions(p.getInsertions());
 
+
             double minPrice = 0;
             for (Insertion i : p.getInsertions()) {
+                if(po.getImage() == null){
+                    po.setImage(i.getImage());
+                }
                 minPrice = (minPrice == 0) ? i.getPricePerDay() : 0;
                 minPrice = (i.getPricePerDay() < minPrice ) ? i.getPricePerDay() : minPrice;
             }
@@ -59,6 +63,13 @@ public class ProductService extends SuperService{
         pp.setTitle(p.getTitle());
         pp.setDescription(p.getDescription());
         pp.setInsertions(p.getInsertions());
+        for (Insertion i : p.getInsertions()) {
+            if(pp.getImage() == null){
+                pp.setImage(i.getImage());
+            }else{
+                break;
+            }
+        }
         return Response.status(Response.Status.OK).entity(pp).build();
     }
 

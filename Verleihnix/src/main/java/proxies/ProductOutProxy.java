@@ -24,6 +24,9 @@ public class ProductOutProxy {
     @JsonProperty
     private List<Insertion> insertions;
 
+    @JsonProperty
+    private String image;
+
     public ProductOutProxy() {
         super();
         this.id = -1;
@@ -31,6 +34,7 @@ public class ProductOutProxy {
         this.description = "";
         this.minPricePerDay = -1;
         this.insertions = new ArrayList<>();
+        this.image = null;
     }
 
     public List<Insertion> getInsertions() {
@@ -71,5 +75,13 @@ public class ProductOutProxy {
 
     public void setMinPricePerDay(double minPricePerDay) {
         this.minPricePerDay = minPricePerDay;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
