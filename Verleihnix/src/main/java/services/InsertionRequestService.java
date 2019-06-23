@@ -133,7 +133,7 @@ public class InsertionRequestService extends SuperService {
 
             // requested by user
             List<InsertionRequest> userRequests = this.em.createQuery("SELECT r FROM InsertionRequest r " +
-                                                                                    "WHERE r.requesterId= :id")
+                    "WHERE r.requesterId= :id")
                     .setParameter("id",user.getId())
                     .getResultList();
             for (InsertionRequest insertionRequest : userRequests) {
@@ -202,24 +202,27 @@ public class InsertionRequestService extends SuperService {
         }
     }
 
-
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     @RequiresWebToken
-    public Response deleteRequest(@PathParam("id") long requestId) {
-        try {
-            User user = getUserByHttpToken();
-            InsertionRequest ir = em.find(InsertionRequest.class, requestId);
-            if(ir.getRequester() == user.getId()){
-                em.remove(ir);
-                return Response.status(Response.Status.OK).build();
-            }
+    public Response deleteInsertionRequest(@PathParam("id") long id) {
+        User user = this.getUserByHttpToken();
+        if(user == null){
             return Response.status(Response.Status.UNAUTHORIZED).build();
-        } catch (Exception e) {
+        }
+        InsertionRequest insertionRequest = em.find(InsertionRequest.class, id);
+
+        if(insertionRequest == null){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        if(insertionRequest.getRequester() != user.getId()){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+        this.deletionHelper.deleteInsertionRequests(insertionRequest);
+
+        return Response.status(Response.Status.OK).build();
     }
 
 }

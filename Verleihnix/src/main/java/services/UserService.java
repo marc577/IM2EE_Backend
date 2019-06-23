@@ -1,5 +1,6 @@
 package services;
 
+import entities.Pool;
 import entities.User;
 import org.mindrot.jbcrypt.BCrypt;
 import proxies.ChangePasswordProxy;
@@ -11,13 +12,14 @@ import javax.json.JsonObject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.List;
-
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Path("/user")
@@ -29,6 +31,13 @@ public class UserService extends SuperService{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(@Valid RegisterProxy registerObject) {
+
+        Pattern regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
+        Matcher regMatcher   = regexPattern.matcher(registerObject.getEmail());
+        if (!regMatcher.matches()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Wrong email-address").build();
+        }
+
         if (!emailExists(registerObject.getEmail())) {
             User user = new User(registerObject.getFirstName(),registerObject.getLastName(), registerObject.getEmail(), registerObject.getPassword());
             em.persist(user);
@@ -137,6 +146,20 @@ public class UserService extends SuperService{
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+    }
+
+    @DELETE
+    @Path("")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RequiresWebToken
+    public Response deleteUser() {
+        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        User u = jwtTokenService.getUserByToken(token);
+        if(u == null){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        this.deletionHelper.deleteUser(u);
+        return Response.status(Response.Status.OK).build();
     }
 
     private boolean emailExists(final String email) {

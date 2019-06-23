@@ -2,6 +2,7 @@ package services;
 
 import entities.Insertion;
 import entities.Product;
+import entities.User;
 import proxies.ProductOutProxy;
 import proxies.ProductProxy;
 import security.RequiresWebToken;
@@ -9,6 +10,7 @@ import security.RequiresWebToken;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -71,6 +73,24 @@ public class ProductService extends SuperService{
             }
         }
         return Response.status(Response.Status.OK).entity(pp).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RequiresWebToken
+    public Response deleteProduct(@PathParam("id") long id) {
+        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        User u = jwtTokenService.getUserByToken(token);
+        if(u == null){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        Product product = em.find(Product.class, id);
+        if (product == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        this.deletionHelper.deleteProduct(product);
+        return Response.status(Response.Status.OK).build();
     }
 
 }

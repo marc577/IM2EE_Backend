@@ -45,6 +45,8 @@ public class ChatService extends SuperService {
 
     }
 
+
+
     @GET
     @Path("/{idInsertionRequest}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -52,7 +54,7 @@ public class ChatService extends SuperService {
     @RequiresWebToken
     public Response getChatRoom(@PathParam("idInsertionRequest") long insertionRequestId) {
         try {
-            User user = getUserByHttpToken();
+            User user = this.getUserByHttpToken();
             if(user == null){
                 return Response.status(Response.Status.UNAUTHORIZED).build();
             }
@@ -122,5 +124,27 @@ public class ChatService extends SuperService {
         } catch (NotAuthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @RequiresWebToken
+    public Response deleteChatEntry(@PathParam("id") long id) {
+        User user = this.getUserByHttpToken();
+        if(user == null){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        ChatEntry chatEntry = em.find(ChatEntry.class, id);
+        if(chatEntry == null){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        if(chatEntry.getSenderId() != user.getId()){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+        this.deletionHelper.deleteChatEntry(chatEntry);
+
+        return Response.status(Response.Status.OK).build();
     }
 }

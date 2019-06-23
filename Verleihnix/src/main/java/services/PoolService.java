@@ -21,16 +21,8 @@ import java.util.List;
 
 @Path("/pool")
 @Stateless
-public class PoolService {
+public class PoolService extends SuperService {
 
-    @PersistenceContext
-    EntityManager em;
-
-    @Inject
-    private HttpServletRequest httpServletRequest;
-
-    @Inject
-    private JwtTokenService jwtTokenService;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -66,16 +58,15 @@ public class PoolService {
     @Produces(MediaType.APPLICATION_JSON)
     @RequiresWebToken
     public Response getPool(@PathParam("id") long id) {
-        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        User u = jwtTokenService.getUserByToken(token);
-        if(u == null){
+        User user = this.getUserByHttpToken();
+        if(user == null){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         Pool p = em.find(Pool.class, id);
         if(p == null){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        if(p.getUser() != u){
+        if(p.getUser() != user){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         return Response.status(Response.Status.OK).entity(p).build();
@@ -99,20 +90,19 @@ public class PoolService {
     @Produces(MediaType.APPLICATION_JSON)
     @RequiresWebToken
     public Response deletePool(@PathParam("id") long id) {
-        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        User u = jwtTokenService.getUserByToken(token);
-        if(u == null){
+        User user = this.getUserByHttpToken();
+        if(user == null){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         Pool p = em.find(Pool.class, id);
         if(p == null){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        if(p.getUser() != u){
+        if(p.getUser() != user){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        em.createQuery("DELETE from Pool p where p.id = :id").setParameter("id", p.getId()).executeUpdate();
+        this.deletionHelper.deletePool(p);
 
         return Response.status(Response.Status.OK).build();
     }
