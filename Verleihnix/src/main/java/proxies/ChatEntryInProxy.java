@@ -38,10 +38,18 @@ public class ChatEntryInProxy {
         return idSender;
     }
 
+    /**
+     *
+     * @param idSender
+     */
     public void setIdSender(long idSender) {
         this.idSender = idSender;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdInsertionRequest() {
         return idInsertionRequest;
     }

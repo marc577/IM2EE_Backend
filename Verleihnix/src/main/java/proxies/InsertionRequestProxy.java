@@ -2,7 +2,6 @@ package proxies;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import entities.Insertion;
 import entities.InsertionRequest;
 import entities.State;
 
