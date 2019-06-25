@@ -4,6 +4,9 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+/**
+ * represents the in-/ output data object for the Pool
+ */
 @JsonRootName("Pool")
 public class PoolProxy {
 

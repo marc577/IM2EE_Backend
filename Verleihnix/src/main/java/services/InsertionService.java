@@ -17,9 +17,18 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Rest-Service for the Chats
+ */
 @Path("/insertion")
 public class InsertionService extends SuperService {
 
+    /**
+     * Create or update an Insertion
+     * @param poolId
+     * @param insertionProxy
+     * @return
+     */
     @POST
     @Transactional
     @Path("/{poolId}")
@@ -80,6 +89,11 @@ public class InsertionService extends SuperService {
         return Response.status(Response.Status.OK).entity(insertionOutProxy).build();
     }
 
+    /**
+     * returns all insertions of a pool
+     * @param poolId
+     * @return
+     */
     @GET
     @Path("insertionPool/{poolId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -89,7 +103,7 @@ public class InsertionService extends SuperService {
 
         try {
             User user = getUserByHttpToken();
-            List<InsertionOutProxy> insertionOutProxies = new ArrayList<>();
+            List<InsertionOutProxy> insertionOutProxies = new ArrayList<InsertionOutProxy>();
             Pool pool = this.findPool(poolId, user);
             InsertionOutProxy insertionOutProxy;
             for (Insertion insertion : pool.getInsertions()) {
@@ -106,6 +120,11 @@ public class InsertionService extends SuperService {
         }
     }
 
+    /**
+     * Returns an Insertion by given ID
+     * @param insertionId
+     * @return
+     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -146,6 +165,12 @@ public class InsertionService extends SuperService {
     }
 
 
+    /**
+     * Load user-image to an Insertion
+     * @param id
+     * @param imageBase64Data
+     * @return
+     */
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Path("/image/{id}")

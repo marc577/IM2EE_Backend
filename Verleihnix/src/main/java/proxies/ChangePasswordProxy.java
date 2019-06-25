@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * represents the in-/ output data object for the password
+ */
 @JsonRootName("DeviceBasic")
 public class ChangePasswordProxy {
 

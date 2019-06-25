@@ -3,6 +3,9 @@ package proxies;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+/**
+ * represents the in-/ output data object for the user
+ */
 @JsonRootName("User")
 public class UserProxy {
 

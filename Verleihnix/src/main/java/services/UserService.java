@@ -1,6 +1,5 @@
 package services;
 
-import entities.Pool;
 import entities.User;
 import org.mindrot.jbcrypt.BCrypt;
 import proxies.ChangePasswordProxy;
@@ -16,15 +15,21 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Rest-Service for the User
+ */
 @Path("/user")
 public class UserService extends SuperService{
 
+    /**
+     * Users registration
+     * @param registerObject
+     * @return
+     */
     @Path("/register")
     @POST
     @Transactional
@@ -46,6 +51,11 @@ public class UserService extends SuperService{
         return Response.status(Response.Status.BAD_REQUEST).entity("User already exists").build();
     }
 
+    /**
+     * Rest-Service for login
+     * @param jsonObject
+     * @return
+     */
     @Path("/login")
     @POST
     @Transactional
@@ -75,6 +85,11 @@ public class UserService extends SuperService{
         }
     }
 
+    /**
+     * Rest-Service for editing user information
+     * @param userProxy
+     * @return
+     */
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
@@ -105,6 +120,10 @@ public class UserService extends SuperService{
         }
     }
 
+    /**
+     * rest-Service for get an user object
+     * @return
+     */
     @GET
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
@@ -126,6 +145,11 @@ public class UserService extends SuperService{
         }
     }
 
+    /**
+     * Rest-Service for changing users password
+     * @param changePasswordProxy
+     * @return
+     */
     @Path("/changePassword")
     @POST
     @Transactional
@@ -148,6 +172,10 @@ public class UserService extends SuperService{
         }
     }
 
+    /**
+     * Rest-Service for deleting User
+     * @return
+     */
     @DELETE
     @Path("")
     @Produces(MediaType.APPLICATION_JSON)

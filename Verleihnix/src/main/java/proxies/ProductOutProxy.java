@@ -6,8 +6,10 @@ import entities.Insertion;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * represents the output data object for the Product
+ */
 public class ProductOutProxy {
-
 
     @JsonProperty
     private long id;
@@ -33,7 +35,7 @@ public class ProductOutProxy {
         this.title = "";
         this.description = "";
         this.minPricePerDay = -1;
-        this.insertions = new ArrayList<>();
+        this.insertions = new ArrayList<Insertion>();
         this.image = null;
     }
 

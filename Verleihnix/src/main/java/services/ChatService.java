@@ -12,9 +12,17 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Rest-Service for the Chats
+ */
 @Path("/chat")
 public class ChatService extends SuperService {
 
+    /**
+     * Create a new object of ChatEntry object and store in database
+     * @param chatentryInProxy
+     * @return the created ChatEntry object
+     */
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
@@ -46,7 +54,11 @@ public class ChatService extends SuperService {
     }
 
 
-
+    /**
+     * returns an object of a ChatRoom by given id of an insertionRequest
+     * @param insertionRequestId
+     * @return
+     */
     @GET
     @Path("/{idInsertionRequest}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -63,7 +75,7 @@ public class ChatService extends SuperService {
                     "ORDER BY c.sendDate ASC ")
                     .getResultList();
 
-            List<ChatEntry> returnList = new ArrayList<>();
+            List<ChatEntry> returnList = new ArrayList<ChatEntry>();
             for (ChatEntry chatEntry : chatEntries) {
                 if (chatEntry.getInsertionRequest().getId()==insertionRequestId) {
                     if (chatEntry.getSenderId() != user.getId()) {
@@ -83,7 +95,11 @@ public class ChatService extends SuperService {
     }
 
 
-
+    /**
+     * Sets a ChatEntry to listened by the user
+     * @param id
+     * @return
+     */
     @GET
     @Path("/setChatEntryListened/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -107,6 +123,9 @@ public class ChatService extends SuperService {
         }
     }
 
+    /**
+     *
+     */
     @GET
     @Path("/new")
     @Produces(MediaType.APPLICATION_JSON)
@@ -126,6 +145,11 @@ public class ChatService extends SuperService {
         }
     }
 
+    /**
+     * delete a chatEntry
+     * @param id
+     * @return
+     */
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

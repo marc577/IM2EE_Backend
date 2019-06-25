@@ -17,9 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Rest-Service for the Products
+ */
 @Path("/product")
 public class ProductService extends SuperService{
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
@@ -28,7 +35,7 @@ public class ProductService extends SuperService{
     public Response get() {
         TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p", Product.class);
         List<Product> products = query.getResultList();
-        List<ProductOutProxy> results = new ArrayList<>();
+        List<ProductOutProxy> results = new ArrayList<ProductOutProxy>();
         for(Product p : products) {
             ProductOutProxy po = new ProductOutProxy();
             po.setId(p.getId());
@@ -51,6 +58,11 @@ public class ProductService extends SuperService{
         return Response.status(Response.Status.OK).entity(results).build();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -75,6 +87,11 @@ public class ProductService extends SuperService{
         return Response.status(Response.Status.OK).entity(pp).build();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

@@ -8,6 +8,9 @@ import entities.State;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * represents the in-/ output data object for the InsertionRequest
+ */
 @JsonRootName("InsertionRequestProxy")
 public class InsertionRequestProxy {
 

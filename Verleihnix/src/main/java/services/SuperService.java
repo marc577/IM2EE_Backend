@@ -11,6 +11,9 @@ import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
+/**
+ * SuperService which hold objects of HttpServletRequest, DeletionHelper and EntityManager which are used by the subclasses
+ */
 public abstract class SuperService {
 
     @Inject

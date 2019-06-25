@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * represents the in-/ output data object for Product
+ */
 @JsonRootName("Product")
 public class ProductImgProxy {
 
