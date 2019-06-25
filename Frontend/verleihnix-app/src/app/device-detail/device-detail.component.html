@@ -1,0 +1,66 @@
+<div class="spinner" *ngIf="!product">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="product">
+    <br>
+    <div>
+        <a mat-button routerLink="/home/borrow">
+            <mat-icon>arrow_back</mat-icon>
+        </a>
+    </div>
+    <div>
+        <h2 style="text-align: center;">{{product.title}}</h2>
+        <div class="center-content">
+            <div style="margin-right: 15px;">
+                <img src="{{product.image}}" alt="Foto" style="max-height: 200px;">
+            </div>
+            <p style="margin-left: 15px;">{{product.description}}</p>
+        </div>
+        <br>
+        <div class="center-content">
+            <mat-form-field style="margin-right: 15px;">
+                <input matInput [min]="minDateFrom" [matDatepickerFilter]="dateFilter" [formControl]="dateFrom" [matDatepicker]="pickerfrom" placeholder="von">
+                <mat-datepicker-toggle matSuffix [for]="pickerfrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerfrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field style="margin-left: 15px;">
+                <input matInput [min]="minDateTo" [matDatepickerFilter]="dateFilter" [formControl]="dateTo" [matDatepicker]="pickerto" placeholder="bis">
+                <mat-datepicker-toggle matSuffix [for]="pickerto"></mat-datepicker-toggle>
+                <mat-datepicker #pickerto></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+      <br>
+        <mat-divider></mat-divider>
+        <br>
+        <mat-list>
+            <h3 mat-subheader>Verfügbare Inserate</h3>
+            <mat-list-item *ngFor="let de of filtered">
+                <div mat-line>
+                    <div class="insertion">
+                        <div class="head">
+                            <span>{{de.pricePerDay * days | number : '1.2-2'}}</span><span>€</span>
+                            <p class="info-text">{{de.pricePerDay | number : '1.2-2'}} € / Tag</p>
+                        </div>
+                        <div class="content">
+                            <span>{{de.title}}</span>
+                            <p>{{de.description}}</p>
+                        </div>
+                        <div class="actions">
+                            <button matTooltip="Gerät anfragen" mat-stroked-button (click)="request(de);"><mat-icon>label_important</mat-icon></button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <mat-divider></mat-divider>
+                <br>
+            </mat-list-item>
+            <mat-list-item *ngIf="filtered.length == 0">
+                    <div class="insertion">
+                        <div class="head">
+                            <span>Keine Inserate in diesem Zeitraum verfügbar</span>
+                        </div>
+                    </div>
+            </mat-list-item>
+        </mat-list>
+</div>

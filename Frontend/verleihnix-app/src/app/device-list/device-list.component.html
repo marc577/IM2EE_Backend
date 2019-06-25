@@ -1,0 +1,46 @@
+<div>
+  <br>
+    <div class="product-filter">
+        <form>
+          <mat-form-field>
+              <input style="font-size:25px;" name="search" matInput placeholder="" [(ngModel)]="searchValue" (change)="search()">
+              <mat-icon matPrefix>{{'search'}}</mat-icon>
+              <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+                <mat-icon>close</mat-icon>
+              </button>
+          </mat-form-field>
+            <!-- <br>
+            <mat-form-field>
+                <input matInput [min]="minDateFrom" [formControl]="dateFrom" [matDatepicker]="pickerfrom" placeholder="von">
+                <mat-datepicker-toggle matSuffix [for]="pickerfrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerfrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [min]="minDateTo" [formControl]="dateTo" [matDatepicker]="pickerto" placeholder="bis">
+                <mat-datepicker-toggle matSuffix [for]="pickerto"></mat-datepicker-toggle>
+                <mat-datepicker #pickerto></mat-datepicker>
+            </mat-form-field> -->
+          </form>
+        </div>
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    <div class="device-list">
+        <mat-card class="product-card" *ngFor="let device of devices | filter: true:'title':searchValue">
+            <mat-card-header>
+              <!-- <div mat-card-avatar class="example-header-image"></div> -->
+              <mat-card-title>{{device.title}}</mat-card-title>
+              <mat-card-subtitle>4 Inserate</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="{{device.image}}" alt="Gerätefoto">
+            <mat-card-content>
+              <p>
+                 ab {{device.minPricePerDay | number : '1.2-2'}} € / Tag
+              </p>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button (click)="goToDetail(device.id)" mat-button>Details</button>
+            </mat-card-actions>
+          </mat-card>
+    </div>
+  </div>

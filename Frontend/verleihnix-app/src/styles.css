@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body{
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    margin:0;
+    padding:0;
+}
+.center-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mat-tab-body.mat-tab-body-active{
+    display: flex;
+    justify-content: center;
+}
+.mat-tab-body-content{
+    width:80%;
+}
+.spinner {
+    padding-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
