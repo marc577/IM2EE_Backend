@@ -15,7 +15,7 @@
 *.war
 *.nar
 *.ear
-*.zip
+#*.zip
 *.tar.gz
 *.rar
 
@@ -25,4 +25,4 @@ hs_err_pid*
 #InteliJ
 .idea
 target
-*.iml
+#*.iml
