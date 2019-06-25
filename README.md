@@ -1,6 +1,6 @@
 # Verleihnix
-# JavaEE - Projekt
-Plattform zur Verleihung von Materialien
+## JavaEE - Projekt
+Plattform zur Verleihung von Materialien von
 
 - Daniel Abel
 - Marc Reinke
