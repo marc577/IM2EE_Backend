@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import entities.Insertion;
 import entities.Product;
 
+/**
+ * represents the output data object for the insertion
+ */
 @JsonRootName("Insertion")
 public class InsertionOutProxy {
 

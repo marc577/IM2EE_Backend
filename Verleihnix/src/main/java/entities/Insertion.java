@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * represents the entity model for an Insertion
+ */
 @Entity(name="Insertion")
 public class Insertion {
 
@@ -38,7 +41,7 @@ public class Insertion {
     private Product product;
 
     @OneToMany(mappedBy = "insertion", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<InsertionRequest> insertionRequests = new ArrayList<>();
+    private List<InsertionRequest> insertionRequests = new ArrayList<InsertionRequest>();
 
     public Insertion() {
         super();

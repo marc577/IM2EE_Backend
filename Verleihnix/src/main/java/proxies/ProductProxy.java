@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * represents the in-/ output data object for the Product
+ */
 @JsonRootName("Pool")
 public class ProductProxy {
 
@@ -24,7 +27,7 @@ public class ProductProxy {
 	private String description;
 
 	@JsonProperty
-	private List<Insertion> insertions = new ArrayList<>();
+	private List<Insertion> insertions = new ArrayList<Insertion>();
 
 	@JsonProperty
 	private String image;

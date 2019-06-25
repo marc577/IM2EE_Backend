@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * represents the entity model for a chatEntry
+ */
 @Entity(name="ChatEntry")
 public class ChatEntry{
 

@@ -2,12 +2,14 @@ package entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.ejb.EnterpriseBean;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * represents the entity model for a Product
+ */
 @Entity(name="Product")
 public class Product {
 
@@ -24,7 +26,7 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
     @JsonIgnore
-    private List<Insertion>  insertions = new ArrayList<>();
+    private List<Insertion>  insertions = new ArrayList<Insertion>();
 
     public Product() {
         super();

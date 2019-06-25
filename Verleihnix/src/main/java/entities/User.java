@@ -8,7 +8,9 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import org.mindrot.jbcrypt.BCrypt;
 
-
+/**
+ * represents the entity model for a chatEntry
+ */
 @Entity(name = "User")
 public class User {
 
@@ -32,7 +34,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<Pool> pools = new ArrayList<>();
+    private List<Pool> pools = new ArrayList<Pool>();
 
     public User() {
         super();
@@ -48,6 +50,11 @@ public class User {
         this.pools = Lists.newArrayList();
     }
 
+    /**
+     *
+     * @param pw the user password in plaintext
+     * @return true, if the password match
+     */
     public boolean validate(String pw){
         return BCrypt.checkpw(pw, this.password);
     }
@@ -96,6 +103,10 @@ public class User {
         return password;
     }
 
+    /**
+     * store the password with a crypted salt in database
+     * @param password the password in plaintext
+     */
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());;
     }

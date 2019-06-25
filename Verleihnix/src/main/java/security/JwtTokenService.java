@@ -19,6 +19,9 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Date;
 
+/**
+ * This class is used for generate and validate the jwtToken
+ */
 @ApplicationScoped
 public class JwtTokenService {
 
@@ -27,6 +30,11 @@ public class JwtTokenService {
     @PersistenceContext
     EntityManager em;
 
+    /**
+     * generate a JWT-Token by given User-Object
+     * @param user
+     * @return A String which hold the JWT-Token
+     */
     public String generateJwtToken(User user) {
 
         final LocalDateTime currentTime = LocalDateTime.now(ZoneId.of("UTC"));
@@ -50,10 +58,19 @@ public class JwtTokenService {
         return token;
     }
 
+    /**
+     * Validate users JWT-Token by given token
+     */
     public void validate(String token) {
         getUserByToken(token);
     }
 
+    /**
+     * Validate users JWT-Token and return the user-object of the Token
+     * Throws an Exception if token is invalide
+     * @param token
+     * @return the user of the token
+     */
     public User getUserByToken(String token) {
         try {
             token = token.split(" ")[1];

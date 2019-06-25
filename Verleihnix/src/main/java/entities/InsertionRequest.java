@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * represents the entity model for an InsertionRequest
+ */
 @Entity(name="InsertionRequest")
 public class InsertionRequest {
 
@@ -34,7 +37,7 @@ public class InsertionRequest {
     private long requesterId;
 
     @OneToMany(mappedBy = "insertionRequest",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<ChatEntry> chatEntries = new ArrayList<>();
+    private List<ChatEntry> chatEntries = new ArrayList<ChatEntry>();
 
     public InsertionRequest() {
         super();

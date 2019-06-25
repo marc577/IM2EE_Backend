@@ -13,10 +13,17 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Rest-Service for the InsertionRequests
+ */
 @Path("/insertionRequest")
 public class InsertionRequestService extends SuperService {
 
+    /**
+     * Create or update an insertionRequest
+     * @param insertionRequestProxy
+     * @return
+     */
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
@@ -109,7 +116,10 @@ public class InsertionRequestService extends SuperService {
     }
 
 
-
+    /**
+     * Return all InsertionRequest by the logged-in user
+     * @return
+     */
     @GET
     @Path("")
     @Produces(MediaType.APPLICATION_JSON)
@@ -119,7 +129,7 @@ public class InsertionRequestService extends SuperService {
 
         try {
             User user = getUserByHttpToken();
-            List<InsertionRequestProxy> insertionRequests = new ArrayList<>();
+            List<InsertionRequestProxy> insertionRequests = new ArrayList<InsertionRequestProxy>();
 
             // requested to user
             for(Pool pool : user.getPools()) {
@@ -148,6 +158,12 @@ public class InsertionRequestService extends SuperService {
         }
     }
 
+    /**
+     *
+     * @param insertionRequestId
+     * @param p
+     * @return
+     */
     @POST
     @Path("state/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -182,8 +198,11 @@ public class InsertionRequestService extends SuperService {
         }
     }
 
-
-
+    /**
+     *
+     * @param insertionRequestId
+     * @return
+     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -202,6 +221,11 @@ public class InsertionRequestService extends SuperService {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * represents the entity model for a Pool
+ */
 @Entity(name = "Pool")
 public class Pool {
 
@@ -21,7 +24,7 @@ public class Pool {
     private User user;
 
     @OneToMany(mappedBy = "pool",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Insertion> insertions = new ArrayList<>();
+    private List<Insertion> insertions = new ArrayList<Insertion>();
 
 
     public Pool() {

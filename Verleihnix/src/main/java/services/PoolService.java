@@ -3,15 +3,9 @@ package services;
 import entities.Pool;
 import entities.User;
 import proxies.PoolProxy;
-import security.JwtTokenService;
 import security.RequiresWebToken;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.HttpHeaders;
@@ -19,11 +13,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * Rest-Service for the Pools
+ */
 @Path("/pool")
 @Stateless
 public class PoolService extends SuperService {
 
 
+    /**
+     * Create or update a Pool of the logged-in User
+     * @param pp
+     * @return
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -53,6 +55,11 @@ public class PoolService extends SuperService {
         return Response.status(Response.Status.OK).entity(pp).build();
     }
 
+    /**
+     * returns a Pool by given ID
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -72,6 +79,10 @@ public class PoolService extends SuperService {
         return Response.status(Response.Status.OK).entity(p).build();
     }
 
+    /**
+     * Returns a list of all pools of the logged-in User
+     * @return
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @RequiresWebToken
@@ -85,6 +96,11 @@ public class PoolService extends SuperService {
         return Response.status(Response.Status.OK).entity(pools).build();
     }
 
+    /**
+     * Delete the pool by given ID
+     * @param id
+     * @return
+     */
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
